@@ -22,10 +22,9 @@ export default class RecipeForm extends React.Component {
   }
 
   handleChange(event) {
-    console.log(event.target);
-    // this.setState({
-    //   event.target.name: event.target.value;
-    // }, ()=> console.log("this.stat", this.state))
+    this.setState({
+      [event.target.id]: event.target.value
+    });
   }
 
   render() {
@@ -33,7 +32,7 @@ export default class RecipeForm extends React.Component {
     <div className="container">
   <div className="row justify-content-center align-items-center">
     <div className="col">
-      <h2>Upload a Recipe!</h2>
+      <h2 className="text-center">Upload a Recipe!</h2>
       <form onSubmit={this.handleSubmit}>
         <div className="form-group">
           <label htmlFor="recipeName">Recipe Name</label>
@@ -41,23 +40,23 @@ export default class RecipeForm extends React.Component {
         </div>
         <div className="form-group">
           <label htmlFor="recipeOrigin">Recipe Origin</label>
-          <input type="text" value={this.state.recipeOrigin} onChange={this.handleChange} className="form-control "/>
+          <textarea type="text" value={this.state.recipeOrigin} rows="3" onChange={this.handleChange} className="form-control" id="recipeOrigin"/>
         </div>
         <div className="form-group">
           <label htmlFor="recipeIngredients">Ingredients</label>
-          <input type="text" value={this.state.recipeIngredients} onChange={this.handleChange} className="form-control"/>
+          <input type="text" value={this.state.recipeIngredients} onChange={this.handleChange} className="form-control" id="recipeIngredients"/>
         </div>
         <div className="form-group">
           <label htmlFor="recipeDirections">Directions</label>
-          <input type="text" value={this.state.recipeDirections} onChange={this.handleChange} className="form-control "/>
+          <textarea type="text" rows="4" value={this.state.recipeDirections} onChange={this.handleChange} className="form-control" id="recipeDirections"/>
         </div>
         <div className="form-group">
           <label htmlFor="recipeEquipment">Equipment</label>
-          <input type="text" value={this.state.recipeEquipment} onChange={this.handleChange}className="form-control"/>
+          <input type="text" value={this.state.recipeEquipment} onChange={this.handleChange}className="form-control" id="recipeEquipment"/>
         </div>
         <div className="form-group">
           <label htmlFor="recipeCategory">Category</label>
-          <select value={this.state.recipeCategory} onChange={this.handleChange}>
+          <select value={this.state.recipeCategory} onChange={this.handleChange} id="recipeCategory">
             <option value="indian">Indian</option>
             <option value="italian">Italian</option>
             <option value="chinese">Chinese</option>
