@@ -6,10 +6,9 @@ export default class RecipeForm extends React.Component {
     this.state = {
       recipeName: '',
       recipeOrigin: '',
-      recipeIngredients: '',
-      recipeEquipment: '',
-      recipeDirections: '',
-      recipeCategory: ''
+      ingredients: '',
+      equipment: '',
+      instructions: ''
     };
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -17,8 +16,30 @@ export default class RecipeForm extends React.Component {
   }
 
   handleSubmit(event) {
-    const { recipeName, recipeOrigin, recipeIngredients, recipeEquipment, recipeDirections, recipeCategory } = this.state;
     event.preventDefault();
+    const state = this.state;
+    const { recipeName, recipeOrigin, ingredients, equipment, instructions } = state;
+    for (const property in state) {
+      if (!state[property]) {
+        alert('Please fill out all fields before submitting');
+        return;
+      }
+    }
+    let bodyObject = { recipeName, recipeOrigin, ingredients, equipment, instructions };
+    bodyObject = JSON.stringify(bodyObject);
+    console.log(bodyObject);
+    // restructure object names
+    // make object
+    // stringinfy
+    fetch('/api/recipe/', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: bodyObject
+    })
+      .then(response => console.log(response));
+    // .then(data => console.log(data));
   }
 
   handleChange(event) {
@@ -43,24 +64,19 @@ export default class RecipeForm extends React.Component {
           <textarea type="text" value={this.state.recipeOrigin} rows="3" onChange={this.handleChange} className="form-control" id="recipeOrigin"/>
         </div>
         <div className="form-group">
-          <label htmlFor="recipeIngredients">Ingredients</label>
-          <input type="text" value={this.state.recipeIngredients} onChange={this.handleChange} className="form-control" id="recipeIngredients"/>
+          <label htmlFor="ingredients">Ingredients</label>
+          <input type="text" value={this.state.ingredients} onChange={this.handleChange} className="form-control" id="ingredients"/>
         </div>
         <div className="form-group">
-          <label htmlFor="recipeDirections">Directions</label>
-          <textarea type="text" rows="4" value={this.state.recipeDirections} onChange={this.handleChange} className="form-control" id="recipeDirections"/>
+          <label htmlFor="equipment">Equipment</label>
+          <input type="text" value={this.state.equipment} onChange={this.handleChange} className="form-control" id="equipment" />
         </div>
         <div className="form-group">
-          <label htmlFor="recipeEquipment">Equipment</label>
-          <input type="text" value={this.state.recipeEquipment} onChange={this.handleChange}className="form-control" id="recipeEquipment"/>
+          <label htmlFor="instructions">Directions</label>
+          <input type="text" rows="4" value={this.state.instructions} onChange={this.handleChange} className="form-control" id="instructions"/>
         </div>
-        <div className="form-group">
-          <label htmlFor="recipeCategory">Category</label>
-          <select value={this.state.recipeCategory} onChange={this.handleChange} id="recipeCategory">
-            <option value="indian">Indian</option>
-            <option value="italian">Italian</option>
-            <option value="chinese">Chinese</option>
-          </select>
+        <div className="text-center">
+          <button className="btn btn-primary btn-lg" type="submit">Submit</button>
         </div>
       </form>
     </div>

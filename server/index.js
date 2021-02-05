@@ -13,6 +13,10 @@ app.use(staticMiddleware);
 const jsonMiddleware = express.json();
 app.use(jsonMiddleware);
 
+app.get('/api/test', (req, res) => {
+  res.status(200).json({ success: 'test was a success' });
+});
+
 app.get('/api/recipes', (req, res) => {
   const sql = `
   select *
@@ -59,51 +63,97 @@ app.get('/api/recipes/:id', (req, res) => {
 });
 
 app.post('/api/recipe/', (req, res) => {
-  const { recipeName, equipment, recipeOrigin, instruction, stepNumber, ingredientName, ingredientAmount } = req.body;
-  const recipeParams = [recipeName, equipment, recipeOrigin];
+  const userId = 1;
+  // Instruction should be an array of instructions
+  // Ingredient should be an array of ingredient objects
+  // each ingredient object should have 2 properties name and amount
+  /* Example instructions array
+    [
+      'Mix flour salt and eggs into bowl'
+      'Pour mix into pan'
+      'Bake at 450 for 20 minutes'
+    ]
+  */
+  /* Example Ingredients array
+    [
+      {
+        name: 'Flour',
+        amount: '2 cups'
+      },
+      {
+        name: 'Salt',
+        amount: '1 tsp'
+      },
+      {
+        name: 'Eggs',
+        amount: '3'
+      }
+    ]
+  */
+  const { recipeName, equipment, recipeOrigin, instructions, ingredients } = req.body;
+  console.log('recipeName', recipeName);
   const recipeSql = `
-  insert into "recipes" ("recipeName", "equipment", "recipeOrigin")
-    values ($1, $2, $3)
-    returning "recipeId"
+    insert into "recipes" ("recipeName", "equipment", "recipeOrigin", "userId")
+      values ($1, $2, $3, $4)
+      returning "recipeId"
   `;
+  const recipeParams = [recipeName, equipment, recipeOrigin, userId];
+  const fullRecipe = { recipeName, equipment, recipeOrigin };
   db.query(recipeSql, recipeParams)
     .then(result => {
-      const directionParams = [instruction, stepNumber];
+      const { recipeId } = result.rows[0];
+      fullRecipe.recipeId = recipeId;
+      const directionParams = [recipeId];
+      let paramNumber = 1;
+      // Build out all the value sets for each instruction
+      // Add push the values into the directionParams array
+      // if instructions isn't an array, make it an array
+      let instructionsArray;
+      if (typeof instructions !== 'object') {
+        instructionsArray = [instructions];
+      } else {
+        instructionsArray = instructions;
+      }
+      const directionValues = instructionsArray.map((instruction, index) => {
+        directionParams.push(instruction, index + 1);
+        return `($1, $${++paramNumber}, $${++paramNumber})`;
+      });
       const directionSql = `
-    insert into "directions" ("instruction", "stepNumber")
-      values ($1, $2)
-      using "recipeId"
-      returning *
-    `;
-      db.query(directionSql, directionParams);
-    })
-    .then(result => {
-      const ingredientParams = [ingredientName];
-      const ingredientsSql = `
-    insert into "ingredients" ("name")
-      values($1)
-      using "recipeId"
-      returning *
-    `;
-      db.query(ingredientsSql, ingredientParams);
-    })
-    .then(result => {
-      const recipeIngredientParams = [ingredientAmount];
-      const recipeIngredientsSql = `
-      insert into "recipeIngredients" ("amount")
-        values($1)
-        using "recipeId", "ingredientId"
+        insert into "directions" ("recipeId", "instruction", "stepNumber")
+        values ${directionValues.join(', ')}
         returning *
       `;
-      db.query(recipeIngredientsSql, recipeIngredientParams);
-    })
-    .then(result => {
-      const [fullRecipe] = result.rows;
-      res.status(201).json(fullRecipe);
-    })
-    .catch(err => {
+      return db.query(directionSql, directionParams)
+        .then(result => {
+          const ingredientParams = [recipeId];
+          let paramNumber = 1;
+          fullRecipe.directions = result.rows;
+          // Build out all the value sets for each ingredient
+          // Add push the values into the ingredientParams array
+          let ingredientsArray;
+          if (typeof ingredients !== 'object') {
+            ingredientsArray = [ingredients];
+          } else {
+            ingredientsArray = ingredients;
+          }
+          const ingredientValues = ingredientsArray.map(ingredient => {
+            ingredientParams.push(ingredient.name, ingredient.amount);
+            return `($1, $${++paramNumber}, $${++paramNumber})`;
+          });
+          const ingredientsSql = `
+            insert into "ingredients" ("recipeId", "name", "amount")
+            values ${ingredientValues.join(', ')}
+            returning *
+          `;
+          return db.query(ingredientsSql, ingredientParams);
+        })
+        .then(result => {
+          fullRecipe.ingredients = result.rows;
+          res.status(201).json(fullRecipe);
+        });
+    }).catch(err => {
       console.error(err);
-      res.json({
+      res.status(400).json({
         error: 'an unexpected error occured'
       });
     });
