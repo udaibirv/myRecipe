@@ -136,6 +136,7 @@ app.post('/api/recipe/', (req, res) => {
           } else {
             ingredientsArray = ingredients;
           }
+          console.log(ingredientsArray);
           const ingredientValues = ingredientsArray.map(ingredient => {
             ingredientParams.push(ingredient.name, ingredient.amount);
             return `($1, $${++paramNumber}, $${++paramNumber})`;

@@ -6,12 +6,16 @@ export default class RecipeForm extends React.Component {
     this.state = {
       recipeName: '',
       recipeOrigin: '',
-      ingredients: '',
+      ingredients: [{
+        name: '',
+        amount: ''
+      }],
       equipment: '',
-      instructions: ''
+      instructions: []
     };
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.handleUpdate = this.handleUpdate.bind(this);
 
   }
 
@@ -48,6 +52,13 @@ export default class RecipeForm extends React.Component {
     });
   }
 
+  handleUpdate(event) {
+    let ingredientAmount = { ...this.state.ingredients.amount };
+    ingredientAmount = event.target.value;
+    this.setState({ ingredients.amount:ingredientAmount });
+    console.log(this.state);
+  }
+
   render() {
     return (
     <div className="container">
@@ -64,15 +75,19 @@ export default class RecipeForm extends React.Component {
           <textarea type="text" value={this.state.recipeOrigin} rows="3" onChange={this.handleChange} className="form-control" id="recipeOrigin"/>
         </div>
         <div className="form-group">
-          <label htmlFor="ingredients">Ingredients</label>
-          <input type="text" value={this.state.ingredients} onChange={this.handleChange} className="form-control" id="ingredients"/>
+          <label htmlFor="ingredientsName">Ingredients</label>
+          <input type="text" value={this.state.ingredients.name} onChange={this.handleChange} className="form-control" id="ingredients-name"/>
+        </div>
+        <div className="form-group">
+          <label htmlFor="ingredientsAmount">Ingredient Amount</label>
+          <input type="text" value={this.state.ingredients} onChange={this.handleUpdate} className="form-control" id="ingredients-amount" />
         </div>
         <div className="form-group">
           <label htmlFor="equipment">Equipment</label>
           <input type="text" value={this.state.equipment} onChange={this.handleChange} className="form-control" id="equipment" />
         </div>
         <div className="form-group">
-          <label htmlFor="instructions">Directions</label>
+          <label htmlFor="instructions">Instructions</label>
           <input type="text" rows="4" value={this.state.instructions} onChange={this.handleChange} className="form-control" id="instructions"/>
         </div>
         <div className="text-center">
