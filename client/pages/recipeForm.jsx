@@ -16,6 +16,7 @@ export default class RecipeForm extends React.Component {
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleUpdate = this.handleUpdate.bind(this);
+    this.handleName = this.handleName.bind(this);
 
   }
 
@@ -53,10 +54,17 @@ export default class RecipeForm extends React.Component {
   }
 
   handleUpdate(event) {
-    let ingredientAmount = { ...this.state.ingredients.amount };
-    ingredientAmount = event.target.value;
-    this.setState({ ingredients.amount:ingredientAmount });
+    const ingredientAmount = { ...this.state.ingredients };
+    ingredientAmount[0].amount = event.target.value;
+    this.setState({ ingredients: ingredientAmount[0].amount });
+
     console.log(this.state);
+  }
+
+  handleName(event) {
+    const ingredientName = { ...this.state.ingredients };
+    ingredientName[0].name = event.target.value;
+    this.setState({ ingredients: ingredientName[0].name });
   }
 
   render() {
@@ -76,7 +84,7 @@ export default class RecipeForm extends React.Component {
         </div>
         <div className="form-group">
           <label htmlFor="ingredientsName">Ingredients</label>
-          <input type="text" value={this.state.ingredients.name} onChange={this.handleChange} className="form-control" id="ingredients-name"/>
+          <input type="text" value={this.state.ingredients} onChange={this.handleName} className="form-control" id="ingredients-name"/>
         </div>
         <div className="form-group">
           <label htmlFor="ingredientsAmount">Ingredient Amount</label>
