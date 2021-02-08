@@ -43,14 +43,21 @@ export default class RecipeForm extends React.Component {
       },
       body: bodyObject
     })
-      .then(response => console.log(response));
-    // .then(data => console.log(data));
+      .then(response => response.json())
+      .then(data => console.log(data));
+
   }
 
   handleChange(event) {
     this.setState({
       [event.target.id]: event.target.value
     });
+  }
+
+  handleName(event) {
+    const ingredientName = { ...this.state.ingredients };
+    ingredientName[0].name = event.target.value;
+    this.setState({ ingredients: ingredientName[0].name });
   }
 
   handleUpdate(event) {
@@ -61,13 +68,8 @@ export default class RecipeForm extends React.Component {
     console.log(this.state);
   }
 
-  handleName(event) {
-    const ingredientName = { ...this.state.ingredients };
-    ingredientName[0].name = event.target.value;
-    this.setState({ ingredients: ingredientName[0].name });
-  }
-
   render() {
+    const { ingredients } = this.state;
     return (
     <div className="container">
   <div className="row justify-content-center align-items-center">
@@ -84,11 +86,11 @@ export default class RecipeForm extends React.Component {
         </div>
         <div className="form-group">
           <label htmlFor="ingredientsName">Ingredients</label>
-          <input type="text" value={this.state.ingredients} onChange={this.handleName} className="form-control" id="ingredients-name"/>
+          <input type="text" value={ingredients.name} onChange={this.handleName} className="form-control" id="ingredients-name"/>
         </div>
         <div className="form-group">
           <label htmlFor="ingredientsAmount">Ingredient Amount</label>
-          <input type="text" value={this.state.ingredients} onChange={this.handleUpdate} className="form-control" id="ingredients-amount" />
+          <input type="text" value={ingredients.amount} onChange={this.handleUpdate} className="form-control" id="ingredients-amount" />
         </div>
         <div className="form-group">
           <label htmlFor="equipment">Equipment</label>
