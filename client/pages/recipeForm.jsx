@@ -15,8 +15,9 @@ export default class RecipeForm extends React.Component {
     };
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
-    this.handleUpdate = this.handleUpdate.bind(this);
+    this.handleAmount = this.handleAmount.bind(this);
     this.handleName = this.handleName.bind(this);
+    this.addIngredient = this.addIngredient.bind(this);
 
   }
 
@@ -24,12 +25,12 @@ export default class RecipeForm extends React.Component {
     event.preventDefault();
     const state = this.state;
     const { recipeName, recipeOrigin, ingredients, equipment, instructions } = state;
-    for (const property in state) {
-      if (!state[property]) {
-        alert('Please fill out all fields before submitting');
-        return;
-      }
-    }
+    // for (const property in state) {
+    //   if (!state[property]) {
+    //     alert('Please fill out all fields before submitting');
+    //     return;
+    //   }
+    // }
     let bodyObject = { recipeName, recipeOrigin, ingredients, equipment, instructions };
     bodyObject = JSON.stringify(bodyObject);
     console.log(bodyObject);
@@ -44,28 +45,38 @@ export default class RecipeForm extends React.Component {
       body: bodyObject
     })
       .then(response => response.json())
-      .then(data => console.log(data));
+      .then(data => this.setState({ data }));
 
+  }
+
+  addIngredient(event) {
+    this.setState(prevState => ({
+      ingredients: [...prevState.ingredients, { name: '', amount: '' }]
+    }));
   }
 
   handleChange(event) {
     this.setState({
       [event.target.id]: event.target.value
     });
+
   }
 
   handleName(event) {
     const ingredientName = { ...this.state.ingredients };
-    ingredientName[0].name = event.target.value;
-    this.setState({ ingredients: ingredientName[0].name });
+    for (const index in ingredientName) {
+      ingredientName[index].name = event.target.value;
+    }
+    console.log('target: ', event.target);
+    this.setState({ ingredientName });
   }
 
-  handleUpdate(event) {
+  handleAmount(event) {
     const ingredientAmount = { ...this.state.ingredients };
     ingredientAmount[0].amount = event.target.value;
-    this.setState({ ingredients: ingredientAmount[0].amount });
+    this.setState({ ingredientAmount });
 
-    console.log(this.state);
+    console.log('ingredientAmount: ', ingredientAmount);
   }
 
   render() {
@@ -85,13 +96,29 @@ export default class RecipeForm extends React.Component {
           <textarea type="text" value={this.state.recipeOrigin} rows="3" onChange={this.handleChange} className="form-control" id="recipeOrigin"/>
         </div>
         <div className="form-group">
-          <label htmlFor="ingredientsName">Ingredients</label>
-          <input type="text" value={ingredients.name} onChange={this.handleName} className="form-control" id="ingredients-name"/>
+          <label htmlFor="ingredients">Ingredients</label>
+          {/* <input type="text" value={ingredients.name} onChange={this.handleName} className="form-control" id="ingredients-name"/> */}
+          <button onClick={this.addIngredient}>Add Ingredient</button>
+          {
+            ingredients.map((value, index) => {
+
+              console.log('index: ', index);
+              return (
+              <div className="form-group" key={index}>
+                <label htmlFor="ingredientName">Name</label>
+                  <input type="text" value={ingredients[index].name} onChange={this.handleName} />
+                <label htmlFor="ingredientAmount">Amount</label>
+                  <input type="text" value={ingredients[index].amount} onChange={this.handleAmount} />
+              </div>
+              );
+
+            })
+          }
         </div>
-        <div className="form-group">
+        {/* <div className="form-group">
           <label htmlFor="ingredientsAmount">Ingredient Amount</label>
           <input type="text" value={ingredients.amount} onChange={this.handleUpdate} className="form-control" id="ingredients-amount" />
-        </div>
+        </div> */}
         <div className="form-group">
           <label htmlFor="equipment">Equipment</label>
           <input type="text" value={this.state.equipment} onChange={this.handleChange} className="form-control" id="equipment" />
