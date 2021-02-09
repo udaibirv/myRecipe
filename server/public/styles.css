@@ -1,0 +1,10 @@
+.ingredientButton{
+  margin-left: 15px;
+}
+.ingredientForm{
+  margin-top: 15px;
+  padding-left: 10px;
+}
+.amount, .name{
+  margin-left: 5px;
+}

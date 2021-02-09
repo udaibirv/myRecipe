@@ -64,34 +64,7 @@ app.get('/api/recipes/:id', (req, res) => {
 
 app.post('/api/recipe/', (req, res) => {
   const userId = 1;
-  // Instruction should be an array of instructions
-  // Ingredient should be an array of ingredient objects
-  // each ingredient object should have 2 properties name and amount
-  /* Example instructions array
-    [
-      'Mix flour salt and eggs into bowl'
-      'Pour mix into pan'
-      'Bake at 450 for 20 minutes'
-    ]
-  */
-  /* Example Ingredients array
-    [
-      {
-        name: 'Flour',
-        amount: '2 cups'
-      },
-      {
-        name: 'Salt',
-        amount: '1 tsp'
-      },
-      {
-        name: 'Eggs',
-        amount: '3'
-      }
-    ]
-  */
   const { recipeName, equipment, recipeOrigin, instructions, ingredients } = req.body;
-  console.log('recipeName', recipeName);
   const recipeSql = `
     insert into "recipes" ("recipeName", "equipment", "recipeOrigin", "userId")
       values ($1, $2, $3, $4)
@@ -105,9 +78,6 @@ app.post('/api/recipe/', (req, res) => {
       fullRecipe.recipeId = recipeId;
       const directionParams = [recipeId];
       let paramNumber = 1;
-      // Build out all the value sets for each instruction
-      // Add push the values into the directionParams array
-      // if instructions isn't an array, make it an array
       let instructionsArray;
       if (typeof instructions !== 'object') {
         instructionsArray = [instructions];
@@ -128,8 +98,6 @@ app.post('/api/recipe/', (req, res) => {
           const ingredientParams = [recipeId];
           let paramNumber = 1;
           fullRecipe.directions = result.rows;
-          // Build out all the value sets for each ingredient
-          // Add push the values into the ingredientParams array
           let ingredientsArray;
           if (typeof ingredients !== 'object') {
             ingredientsArray = [ingredients];
@@ -146,9 +114,11 @@ app.post('/api/recipe/', (req, res) => {
             values ${ingredientValues.join(', ')}
             returning *
           `;
+          console.log('ingredientsSql: ', ingredientsSql);
           return db.query(ingredientsSql, ingredientParams);
         })
         .then(result => {
+
           fullRecipe.ingredients = result.rows;
           res.status(201).json(fullRecipe);
         });
