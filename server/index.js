@@ -46,6 +46,8 @@ app.get('/api/recipes/:id', (req, res) => {
   const sql = `
   select *
     from "recipes"
+    join "ingredients" using ("recipeId")
+    join "directions" using ("recipeId")
     where "recipeId" = $1
   `;
 
