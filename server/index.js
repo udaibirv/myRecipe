@@ -44,11 +44,38 @@ app.get('/api/recipes/:id', (req, res) => {
   const params = [recipeId];
 
   const sql = `
-  select *
-    from "recipes"
-    join "ingredients" using ("recipeId")
-    join "directions" using ("recipeId")
-    where "recipeId" = $1
+  with ingreds as (
+  select ri."recipeId", array_to_json(array_agg(ri)) as matching
+  from (
+    select
+      "ingredientId",
+      "recipeId",
+      "name",
+      "amount"
+    from "ingredients"
+  ) as ri
+  group by ri."recipeId"
+), steps as (
+  select steps."recipeId", array_to_json(array_agg(steps)) as matching
+  from (
+    select
+      "directionId",
+      "recipeId",
+      "instruction",
+      "stepNumber"
+    from "directions"
+  ) as steps
+  group by steps."recipeId"
+)
+select
+  r."recipeId",
+  r."recipeName",
+  r."equipment",
+  r."recipeOrigin",
+  coalesce((select matching from "ingreds" where "ingreds"."recipeId" = r."recipeId"), '[]'::json) as "ingredients",
+  coalesce((select matching from "steps" where "steps"."recipeId" = r."recipeId"), '[]'::json) as "directions"
+from "recipes" as r
+where r."recipeId" = $1;
   `;
 
   db.query(sql, params)
