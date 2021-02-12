@@ -1,5 +1,4 @@
 import React from 'react';
-import Home from './pages/home';
 import RecipeList from './pages/recipeList';
 import RecipeDetails from './pages/recipeDetails';
 import parseRoute from '../lib/parse-route';
@@ -25,6 +24,7 @@ export default class App extends React.Component {
     }
 
     if (route.path === 'recipes') {
+
       const recipeId = route.params.get('recipeId');
       return <RecipeDetails recipeId={recipeId} />;
     }
@@ -34,7 +34,6 @@ export default class App extends React.Component {
   render() {
     return (
     <>
-
       { this.renderPage() }
     </>
     );
