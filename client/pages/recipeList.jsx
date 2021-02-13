@@ -29,23 +29,17 @@ export default class RecipeList extends React.Component {
     return (
       <div className="container">
         <div className="row">
-          <div className="col d-flex justify-content-center">
-
-              <div className="card-deck">
-                <div className="card">
 
               {
                 recipes.map((recipe, index) => {
                   return (
-                    <RecipeListItem key={recipe.recipeId} recipe={recipe} index={index} />
+                    <div key={recipe.recipeId} className="col-12 col-md-6 col-lg-4">
+                    <RecipeListItem recipe={recipe} index={index} />
+                    </div>
                   );
                 })
               }
 
-              </div>
-                </div>
-
-          </div>
         </div>
 
       </div>

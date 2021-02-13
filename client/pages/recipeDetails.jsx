@@ -22,36 +22,47 @@ export default class RecipeDetails extends React.Component {
     const recipeObject = this.state.recipe[0];
 
     const ingredientMap = recipeObject.ingredients.map(ingredient =>
-      <li key={ingredient.ingredientId} className="list-item">{`${ingredient.amount} ${ingredient.name}  `}</li>
+      <li key={ingredient.ingredientId} className="list-item detail-text">{`${ingredient.amount} ${ingredient.name}  `}</li>
     );
 
     return (
       <div className="container">
+        <a href='#' className="text-secondary">
+          &lt; Back To Recipe List
+        </a>
         <div className="card shadow-sm">
           <div className="card-body">
-            <a href='#' className="text-secondary">
-              &lt; back to recipe list
-            </a>
-          </div>
-        </div>
-        <div className="row mb-4">
-          <div className="col-12 col-sm-6 col-md-5">
-            <h2>{recipeObject.recipeName}</h2>
-            <h4>{`Equipment Needed: ${recipeObject.equipment}`}</h4>
-            <p>{recipeObject.recipeOrigin}</p>
-          </div>
-        </div>
-        <div className="col-12 col-sm-6 col-md-5">
-          <ul className="list-group" key={this.state.recipe.recipeId}>
-            {ingredientMap}
-            {/* <li className="list-item">{`Ingredient Name: ${recipeObject.ingredients}, Ingredient Amount: ${recipeObject.ingredients}`}</li> */}
-          </ul>
-        </div>
-        <div className="col-12 col-sm-6 col-md-5">
-          <h4>Recipe Instructions:</h4>
-          <p>{recipeObject.directions[0].instruction}</p>
-        </div>
+            <div className="row">
+            </div>
+            <div className="row mb-4">
+              <div className="col">
+                <h1 className="text-center main-header">{recipeObject.recipeName}</h1>
+                <p className="detail-text">{recipeObject.recipeOrigin}</p>
+              </div>
+            </div>
+            <div className="row">
+              <div className="col mb-4">
+                <h5 className="detail-head">{`Equipment Needed: ${recipeObject.equipment}`}</h5>
+              </div>
+            </div>
+            <div className="row">
+              <div className="col mb-4">
+                <h5 className="detail-head">Ingredients</h5>
+
+                  {ingredientMap}
+
+              </div>
+            </div>
+            <div className="row">
+              <div className="col">
+                <h5 className="detail-head">Recipe Instructions</h5>
+                <p className="detail-text">{recipeObject.directions[0].instruction}</p>
+              </div>
+            </div>
       </div>
+      </div>
+      </div>
+
     );
   }
 }
