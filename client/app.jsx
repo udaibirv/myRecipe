@@ -2,6 +2,8 @@ import React from 'react';
 import RecipeList from './pages/recipeList';
 import RecipeDetails from './pages/recipeDetails';
 import parseRoute from '../lib/parse-route';
+import Header from './pages/header';
+import RecipeForm from './pages/recipeForm';
 
 export default class App extends React.Component {
   constructor(props) {
@@ -29,11 +31,16 @@ export default class App extends React.Component {
       return <RecipeDetails recipeId={recipeId} />;
     }
 
+    if (route.path === 'upload') {
+      return <RecipeForm />;
+    }
+
   }
 
   render() {
     return (
     <>
+    <Header />
       { this.renderPage() }
     </>
     );

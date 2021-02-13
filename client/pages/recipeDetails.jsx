@@ -19,11 +19,6 @@ export default class RecipeDetails extends React.Component {
       return null;
     }
 
-    const ingredientsObj = this.state.recipe.ingredients;
-    // const {
-    //   recipeName, recipeOrigin, ingredients, directions, recipeId
-    // } = this.state.recipe;
-    console.log('All Info for Recipes: ', this.state.recipe);
     const recipeObject = this.state.recipe[0];
 
     const ingredientMap = recipeObject.ingredients.map(ingredient =>
