@@ -28,10 +28,7 @@ button{
 }
 
 
-/* .row{
-  display: flex;
 
-} */
 .ingredientButton{
   margin-left: 15px;
 }
@@ -61,7 +58,9 @@ nav {
 }
 .detail-head{
   font-family:  'Pompiere', cursive, sans-serif;
+  color: #009FB7;
 }
 .main-header{
   font-family: 'Josefin Sans', sans-serif;
+  color: #009FB7;
 }
