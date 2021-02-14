@@ -1,3 +1,34 @@
+* {
+  box-sizing: border-box;
+
+}
+label{
+  color: #009FB7;
+}
+.form-header{
+  color: #009FB7;
+  font-family: 'Old Standard TT', serif;
+  font-weight: 700 bold;
+}
+button{
+  background-color:  #009FB7;
+  color: white;
+}
+.card{
+  text-align: center;
+  margin: 0 auto;
+
+}
+.card-title{
+  font-family: 'Josefin Sans', sans-serif;
+  color: #009FB7
+}
+.card-text{
+  font-family: 'Truculenta', sans-serif;
+}
+
+
+
 .ingredientButton{
   margin-left: 15px;
 }
@@ -7,4 +38,29 @@
 }
 .amount, .name{
   margin-left: 5px;
+}
+a{
+  text-decoration: none;
+}
+
+nav {
+  background-color: lightgray;
+}
+
+.upload, .list{
+  margin-left: 10px;
+  font-family: 'Dancing Script', cursive;
+  color: #009FB7;
+}
+
+.detail-text{
+  font-family: 'Nanum Myeongjo', serif;
+}
+.detail-head{
+  font-family:  'Pompiere', cursive, sans-serif;
+  color: #009FB7;
+}
+.main-header{
+  font-family: 'Josefin Sans', sans-serif;
+  color: #009FB7;
 }

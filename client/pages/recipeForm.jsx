@@ -72,7 +72,7 @@ export default class RecipeForm extends React.Component {
     <div className="container">
   <div className="row justify-content-center align-items-center">
     <div className="col">
-      <h2 className="text-center text-primary">Upload a Recipe!</h2>
+      <h2 className="text-center form-header">Upload a Recipe!</h2>
       <form onSubmit={this.handleSubmit}>
         <div className="form-group">
           <label htmlFor="recipeName">Recipe Name</label>
@@ -84,7 +84,7 @@ export default class RecipeForm extends React.Component {
         </div>
         <div className="form-group">
           <label htmlFor="ingredients">Ingredients</label>
-          <button type="button" className="btn btn-primary btn-sm ingredientButton" onClick={this.addIngredient}>Add Ingredient</button>
+          <button type="button" className="btn btn-sm ingredientButton" onClick={this.addIngredient}>Add Ingredient</button>
           {
             ingredients.map((value, index) => {
 
@@ -111,7 +111,7 @@ export default class RecipeForm extends React.Component {
           <input type="text" rows="4" value={this.state.instructions} onChange={this.handleChange} className="form-control" id="instructions"/>
         </div>
         <div className="text-center">
-          <button className="btn btn-primary btn-lg" type="submit">Submit</button>
+          <button className="btn btn-lg" type="submit">Submit</button>
         </div>
       </form>
     </div>
