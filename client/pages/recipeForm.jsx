@@ -1,4 +1,5 @@
 import React from 'react';
+import RecipeList from './recipeList';
 
 export default class RecipeForm extends React.Component {
   constructor(props) {
@@ -24,6 +25,7 @@ export default class RecipeForm extends React.Component {
   handleSubmit(event) {
     event.preventDefault();
     const state = this.state;
+
     const { recipeName, recipeOrigin, ingredients, equipment, instructions } = state;
     let bodyObject = { recipeName, recipeOrigin, ingredients, equipment, instructions };
     bodyObject = JSON.stringify(bodyObject);
@@ -36,6 +38,7 @@ export default class RecipeForm extends React.Component {
     })
       .then(response => response.json())
       .then(data => console.log(data));
+      <RecipeList />;
 
   }
 
