@@ -14,6 +14,7 @@ CREATE TABLE "recipes" (
   "recipeName" TEXT NOT NULL,
   "equipment" TEXT NOT NULL,
   "recipeOrigin" TEXT NOT NULL,
+  "imageUrl" TEXT NOT NULL,
   "userId" serial NOT NULL,
  CONSTRAINT "recipes_pk" PRIMARY KEY ("recipeId")
 ) WITH (

@@ -12,7 +12,8 @@ export default class RecipeForm extends React.Component {
         amount: ''
       }],
       equipment: '',
-      instructions: []
+      instructions: [],
+      imageUrl: ''
     };
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -26,8 +27,8 @@ export default class RecipeForm extends React.Component {
     event.preventDefault();
     const state = this.state;
 
-    const { recipeName, recipeOrigin, ingredients, equipment, instructions } = state;
-    let bodyObject = { recipeName, recipeOrigin, ingredients, equipment, instructions };
+    const { recipeName, recipeOrigin, ingredients, equipment, instructions, imageUrl } = state;
+    let bodyObject = { recipeName, recipeOrigin, ingredients, equipment, instructions, imageUrl };
     bodyObject = JSON.stringify(bodyObject);
     fetch('/api/recipe/', {
       method: 'POST',
@@ -37,7 +38,10 @@ export default class RecipeForm extends React.Component {
       body: bodyObject
     })
       .then(response => response.json())
-      .then(data => console.log(data));
+      .then(data => {
+        console.log(data);
+        window.location.hash = '#';
+      });
 
   }
 
@@ -112,6 +116,10 @@ export default class RecipeForm extends React.Component {
           <label htmlFor="instructions">Instructions</label>
           <input type="text" rows="4" value={this.state.instructions} onChange={this.handleChange} className="form-control" id="instructions"/>
         </div>
+              <div className="form-group">
+                <label htmlFor="imageUrl">Image</label>
+                <input type="text" rows="4" value={this.state.imageUrl} onChange={this.handleChange} className="form-control" id="imageUrl" />
+              </div>
         <div className="text-center">
           <button className="btn btn-lg" type="submit">Submit</button>
         </div>

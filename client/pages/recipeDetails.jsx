@@ -22,7 +22,7 @@ export default class RecipeDetails extends React.Component {
     const recipeObject = this.state.recipe[0];
 
     const ingredientMap = recipeObject.ingredients.map(ingredient =>
-      <li key={ingredient.ingredientId} className="list-item detail-text">{`${ingredient.amount} ${ingredient.name}  `}</li>
+        <li key={ingredient.ingredientId} className="list-item detail-text text-center">{`${ingredient.amount} ${ingredient.name}  `}</li>
     );
 
     return (
@@ -30,7 +30,8 @@ export default class RecipeDetails extends React.Component {
         <a href='#' className="text-secondary">
           &lt; Back To Recipe List
         </a>
-        <div className="card shadow-sm">
+        <div className="card shadow-sm" style={{ width: '35rem' }}>
+          <img className="card-img-top recipeImage" src={recipeObject.imageUrl} />
           <div className="card-body">
             <div className="row">
             </div>
@@ -46,8 +47,8 @@ export default class RecipeDetails extends React.Component {
               </div>
             </div>
             <div className="row">
-              <div className="col mb-4">
-                <h5 className="detail-head">Ingredients</h5>
+              <div className="col mb-4 text-center">
+                <h5 className="detail-head text-center">Ingredients</h5>
 
                   {ingredientMap}
 

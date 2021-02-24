@@ -2,6 +2,15 @@
   box-sizing: border-box;
 
 }
+li{
+  list-style: none;
+}
+.recipeImageList{
+  height: 15rem;
+}
+.recipeImage{
+  height: 25rem;
+}
 label{
   color: #009FB7;
 }

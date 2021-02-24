@@ -72,6 +72,7 @@ select
   r."recipeName",
   r."equipment",
   r."recipeOrigin",
+  r."imageUrl",
   coalesce((select matching from "ingreds" where "ingreds"."recipeId" = r."recipeId"), '[]'::json) as "ingredients",
   coalesce((select matching from "steps" where "steps"."recipeId" = r."recipeId"), '[]'::json) as "directions"
 from "recipes" as r
@@ -93,13 +94,13 @@ where r."recipeId" = $1;
 
 app.post('/api/recipe/', (req, res) => {
   const userId = 1;
-  const { recipeName, equipment, recipeOrigin, instructions, ingredients } = req.body;
+  const { recipeName, equipment, recipeOrigin, instructions, ingredients, imageUrl } = req.body;
   const recipeSql = `
-    insert into "recipes" ("recipeName", "equipment", "recipeOrigin", "userId")
-      values ($1, $2, $3, $4)
+    insert into "recipes" ("recipeName", "equipment", "recipeOrigin", "userId", "imageUrl")
+      values ($1, $2, $3, $4, $5)
       returning "recipeId"
   `;
-  const recipeParams = [recipeName, equipment, recipeOrigin, userId];
+  const recipeParams = [recipeName, equipment, recipeOrigin, userId, imageUrl];
   const fullRecipe = { recipeName, equipment, recipeOrigin };
   db.query(recipeSql, recipeParams)
     .then(result => {
