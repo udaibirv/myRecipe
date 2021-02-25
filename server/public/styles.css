@@ -2,6 +2,19 @@
   box-sizing: border-box;
 
 }
+li{
+  list-style: none;
+}
+.navHeader{
+  font-family: 'Dancing Script', cursive;
+  color: #009FB7;
+}
+.recipeImageList{
+  height: 15rem;
+}
+.recipeImage{
+  height: 25rem;
+}
 label{
   color: #009FB7;
 }
@@ -36,8 +49,11 @@ button{
   margin-top: 15px;
   padding-left: 10px;
 }
-.amount, .name{
+.amount{
   margin-left: 5px;
+}
+.name{
+  margin-left: 20px;
 }
 a{
   text-decoration: none;
@@ -63,4 +79,21 @@ nav {
 .main-header{
   font-family: 'Josefin Sans', sans-serif;
   color: #009FB7;
+}
+@media (max-width: 375px){
+  .form-row{
+    margin-bottom: 8rem;
+  }
+}
+
+@media (min-width: 768px) {
+  .detail-card{
+    margin-bottom: 20rem;
+  }
+  .recipeList{
+    margin-bottom: 18rem;
+  }
+  .form-row {
+    margin-bottom: 24rem;
+  }
 }

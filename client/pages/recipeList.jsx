@@ -27,8 +27,8 @@ export default class RecipeList extends React.Component {
   render() {
     const { recipes } = this.state;
     return (
-      <div className="container">
-        <div className="row">
+      <div className="container-fluid">
+        <div className="row recipeList">
 
               {
                 recipes.map((recipe, index) => {

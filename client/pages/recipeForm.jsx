@@ -1,4 +1,5 @@
 import React from 'react';
+import RecipeList from './recipeList';
 
 export default class RecipeForm extends React.Component {
   constructor(props) {
@@ -11,7 +12,8 @@ export default class RecipeForm extends React.Component {
         amount: ''
       }],
       equipment: '',
-      instructions: []
+      instructions: [],
+      imageUrl: ''
     };
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -24,8 +26,9 @@ export default class RecipeForm extends React.Component {
   handleSubmit(event) {
     event.preventDefault();
     const state = this.state;
-    const { recipeName, recipeOrigin, ingredients, equipment, instructions } = state;
-    let bodyObject = { recipeName, recipeOrigin, ingredients, equipment, instructions };
+
+    const { recipeName, recipeOrigin, ingredients, equipment, instructions, imageUrl } = state;
+    let bodyObject = { recipeName, recipeOrigin, ingredients, equipment, instructions, imageUrl };
     bodyObject = JSON.stringify(bodyObject);
     fetch('/api/recipe/', {
       method: 'POST',
@@ -35,7 +38,10 @@ export default class RecipeForm extends React.Component {
       body: bodyObject
     })
       .then(response => response.json())
-      .then(data => console.log(data));
+      .then(data => {
+        console.log(data);
+        window.location.hash = '#';
+      });
 
   }
 
@@ -69,8 +75,8 @@ export default class RecipeForm extends React.Component {
   render() {
     const { ingredients } = this.state;
     return (
-    <div className="container">
-  <div className="row justify-content-center align-items-center">
+    <div className="container-fluid">
+  <div className="row form-row justify-content-center align-items-center">
     <div className="col">
       <h2 className="text-center form-header">Upload a Recipe!</h2>
       <form onSubmit={this.handleSubmit}>
@@ -90,12 +96,12 @@ export default class RecipeForm extends React.Component {
 
               return (
               <div className="form-group" key={index}>
-                <label htmlFor="ingredientName" className="name">Name</label>
+                <label htmlFor="ingredientName">Name</label>
                   <input type="text" className="ingredientForm name" value={ingredients[index].name} onChange={(event => this.handleName(event, index))} />
-
-                  <label htmlFor="ingredientAmount" className="amount">Amount</label>
-                  <input type="text" className="ingredientForm amount" value={ingredients[index].amount} onChange={(event => this.handleAmount(event, index))} />
-
+                  <div>
+                  <label htmlFor="ingredientAmount" className="ingredientAmount">Amount</label>
+                  <input type="text" className="ingredientForm amount ingredientAmount" value={ingredients[index].amount} onChange={(event => this.handleAmount(event, index))} />
+                  </div>
               </div>
               );
 
@@ -110,6 +116,10 @@ export default class RecipeForm extends React.Component {
           <label htmlFor="instructions">Instructions</label>
           <input type="text" rows="4" value={this.state.instructions} onChange={this.handleChange} className="form-control" id="instructions"/>
         </div>
+              <div className="form-group">
+                <label htmlFor="imageUrl">Recipe Image</label>
+                <input type="text" rows="4" value={this.state.imageUrl} onChange={this.handleChange} className="form-control" id="imageUrl" />
+              </div>
         <div className="text-center">
           <button className="btn btn-lg" type="submit">Submit</button>
         </div>
