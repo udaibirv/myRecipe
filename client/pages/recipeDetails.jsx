@@ -26,28 +26,28 @@ export default class RecipeDetails extends React.Component {
     );
 
     return (
-      <div className="container">
+      <div className="container-fluid">
+        <div className="row">
         <a href='#' className="text-secondary">
           &lt; Back To Recipe List
         </a>
-        <div className="card shadow-sm" style={{ width: '35rem' }}>
+        <div className="card detail-card shadow-sm" style={{ width: '35rem' }}>
           <img className="card-img-top recipeImage" src={recipeObject.imageUrl} />
           <div className="card-body">
-            <div className="row">
-            </div>
+        </div>
             <div className="row mb-4">
-              <div className="col">
+              <div className="col col-lg-12">
                 <h1 className="text-center main-header">{recipeObject.recipeName}</h1>
                 <p className="detail-text">{recipeObject.recipeOrigin}</p>
               </div>
             </div>
             <div className="row">
-              <div className="col mb-4">
+              <div className="col col-lg-12 mb-4">
                 <h5 className="detail-head">{`Equipment Needed: ${recipeObject.equipment}`}</h5>
               </div>
             </div>
             <div className="row">
-              <div className="col mb-4 text-center">
+              <div className="col col-lg-12 mb-4 text-center">
                 <h5 className="detail-head text-center">Ingredients</h5>
 
                   {ingredientMap}
@@ -55,7 +55,7 @@ export default class RecipeDetails extends React.Component {
               </div>
             </div>
             <div className="row">
-              <div className="col">
+              <div className="col col-lg-12">
                 <h5 className="detail-head">Recipe Instructions</h5>
                 <p className="detail-text">{recipeObject.directions[0].instruction}</p>
               </div>

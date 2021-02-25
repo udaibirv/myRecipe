@@ -9,6 +9,7 @@ export default function Header(props) {
         <a href='#upload' className="upload">Upload A Recipe</a>
       </div>
     </nav>
+      <h2 className="navHeader text-center">myRecipe</h2>
   </header>
   );
 }
