@@ -1,6 +1,8 @@
 # myRecipe
 
 myRecipe is a web application that allows users to try out different cusinies, mostly homemade, by making them. I wanted the user to be able to  incorporate a backstory, or origin, to the recipe they upload. My parents are from the state of Punjab in India, and growing up eating Punjabi food almost every day, they always had a story from their childhood that related to the food we were eating that day. This connection to thier upbringing allowed me to connect to my culture, so I wanted to have this idea as an important aspect of the application. 
+ 
+Live Demo: https://recipe-maker-app.herokuapp.com
 
 
 
