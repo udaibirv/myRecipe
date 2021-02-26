@@ -26,6 +26,8 @@ Live Demo: https://recipe-maker-app.herokuapp.com
  
  
  ## Screenshots 
+ <img width="1422" alt="Screen Shot 2021-02-25 at 5 46 02 PM" src="https://user-images.githubusercontent.com/29240758/109243527-f340b700-7791-11eb-9258-2e4e85a637b2.png">
+ <img width="944" alt="Screen Shot 2021-02-25 at 5 46 23 PM" src="https://user-images.githubusercontent.com/29240758/109243525-f2a82080-7791-11eb-8a8f-883884088047.png">
  <img width="588" alt="Screen Shot 2021-02-25 at 5 47 19 PM" src="https://user-images.githubusercontent.com/29240758/109243521-f0de5d00-7791-11eb-8cc8-29a36ccfd01f.png">
-<img width="944" alt="Screen Shot 2021-02-25 at 5 46 23 PM" src="https://user-images.githubusercontent.com/29240758/109243525-f2a82080-7791-11eb-8a8f-883884088047.png">
-<img width="1422" alt="Screen Shot 2021-02-25 at 5 46 02 PM" src="https://user-images.githubusercontent.com/29240758/109243527-f340b700-7791-11eb-9258-2e4e85a637b2.png">
+
+
