@@ -27,7 +27,7 @@ export default class RecipeList extends React.Component {
   render() {
     const { recipes } = this.state;
     return (
-      <div className="container-fluid">
+      <div className="container-fluid list-container">
         <div className="row recipeList">
 
               {

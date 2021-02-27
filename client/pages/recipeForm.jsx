@@ -27,7 +27,7 @@ export default class RecipeForm extends React.Component {
     event.preventDefault();
     const state = this.state;
 
-    const { recipeName, recipeOrigin, ingredients, equipment, instructions, imageUrl } = state;
+    const { recipeName, recipeOrigin, equipment, ingredients, instructions, imageUrl } = state;
     let bodyObject = { recipeName, recipeOrigin, ingredients, equipment, instructions, imageUrl };
     bodyObject = JSON.stringify(bodyObject);
     fetch('/api/recipe/', {
@@ -82,11 +82,11 @@ export default class RecipeForm extends React.Component {
       <form onSubmit={this.handleSubmit}>
         <div className="form-group">
           <label htmlFor="recipeName">Recipe Name</label>
-          <input type="text" value={this.state.recipeName} onChange={this.handleChange} className="form-control" id="recipeName"/>
+          <input type="text" value={this.state.recipeName} onChange={this.handleChange} className="form-control" id="recipeName" required/>
         </div>
         <div className="form-group">
           <label htmlFor="recipeOrigin">Recipe Origin</label>
-          <textarea type="text" value={this.state.recipeOrigin} rows="3" onChange={this.handleChange} className="form-control" id="recipeOrigin"/>
+          <textarea type="text" value={this.state.recipeOrigin} rows="3" onChange={this.handleChange} className="form-control" id="recipeOrigin" required/>
         </div>
         <div className="form-group">
           <label htmlFor="ingredients">Ingredients</label>
@@ -97,10 +97,10 @@ export default class RecipeForm extends React.Component {
               return (
               <div className="form-group" key={index}>
                 <label htmlFor="ingredientName">Name</label>
-                  <input type="text" className="ingredientForm name" value={ingredients[index].name} onChange={(event => this.handleName(event, index))} />
+                  <input type="text" className="ingredientForm name" value={ingredients[index].name} onChange={(event => this.handleName(event, index))} required />
                   <div>
                   <label htmlFor="ingredientAmount" className="ingredientAmount">Amount</label>
-                  <input type="text" className="ingredientForm amount ingredientAmount" value={ingredients[index].amount} onChange={(event => this.handleAmount(event, index))} />
+                  <input type="text" className="ingredientForm amount ingredientAmount" value={ingredients[index].amount} onChange={(event => this.handleAmount(event, index))} required />
                   </div>
               </div>
               );
@@ -110,15 +110,15 @@ export default class RecipeForm extends React.Component {
         </div>
         <div className="form-group">
           <label htmlFor="equipment">Equipment</label>
-          <input type="text" value={this.state.equipment} onChange={this.handleChange} className="form-control" id="equipment" />
+          <input type="text" value={this.state.equipment} onChange={this.handleChange} className="form-control" id="equipment" required />
         </div>
         <div className="form-group">
           <label htmlFor="instructions">Instructions</label>
-          <input type="text" rows="4" value={this.state.instructions} onChange={this.handleChange} className="form-control" id="instructions"/>
+            <textarea type="text" value={this.state.instructions} rows="3" onChange={this.handleChange} className="form-control" id="instructions" required />
         </div>
               <div className="form-group">
                 <label htmlFor="imageUrl">Recipe Image</label>
-                <input type="text" rows="4" value={this.state.imageUrl} onChange={this.handleChange} className="form-control" id="imageUrl" />
+                <input type="text" rows="4" value={this.state.imageUrl} onChange={this.handleChange} className="form-control" id="imageUrl" required />
               </div>
         <div className="text-center">
           <button className="btn btn-lg" type="submit">Submit</button>

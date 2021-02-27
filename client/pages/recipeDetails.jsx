@@ -28,7 +28,7 @@ export default class RecipeDetails extends React.Component {
     return (
       <div className="container-fluid">
         <div className="row">
-        <a href='#' className="text-secondary">
+        <a href='#' className="text-secondary anchor">
           &lt; Back To Recipe List
         </a>
         <div className="card detail-card shadow-sm" style={{ width: '35rem' }}>
@@ -55,7 +55,7 @@ export default class RecipeDetails extends React.Component {
               </div>
             </div>
             <div className="row">
-              <div className="col col-lg-12">
+              <div className="col col-lg-12 col-sm">
                 <h5 className="detail-head">Recipe Instructions</h5>
                 <p className="detail-text">{recipeObject.directions[0].instruction}</p>
               </div>
