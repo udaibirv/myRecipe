@@ -5,12 +5,19 @@
 li{
   list-style: none;
 }
+
+form{
+  padding: 0 3rem;
+}
 .navHeader{
   font-family: 'Dancing Script', cursive;
   color: #009FB7;
 }
+.anchor{
+  padding: 0 2rem;
+}
 .recipeImageList{
-  height: 15rem;
+  height: 25rem;
 }
 .recipeImage{
   height: 25rem;
@@ -67,6 +74,7 @@ nav {
   margin-left: 10px;
   font-family: 'Dancing Script', cursive;
   color: #009FB7;
+  font-size: large;
 }
 
 .detail-text{
@@ -84,6 +92,17 @@ nav {
   .form-row{
     margin-bottom: 8rem;
   }
+  .detail-card{
+    padding: 0 2rem;
+    margin-bottom: 6rem;
+  }
+  .anchor {
+    padding: 1rem 1rem;
+  }
+  .recipeImage{
+    margin-top: .5rem;
+  }
+
 }
 
 @media (min-width: 768px) {
@@ -96,4 +115,15 @@ nav {
   .form-row {
     margin-bottom: 24rem;
   }
+}
+
+@media (min-width: 1800px) and (orientation: landscape){
+  .list-container{
+    width: 30rem;
+
+  }
+  .recipeImageList{
+    width: 25rem;
+  }
+
 }
