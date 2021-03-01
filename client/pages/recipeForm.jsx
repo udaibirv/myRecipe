@@ -96,7 +96,7 @@ export default class RecipeForm extends React.Component {
 
               return (
               <div className="form-group" key={index}>
-                <label htmlFor="ingredientName">Name</label>
+                <label htmlFor="ingredientName" className="ingredientName">Name</label>
                   <input type="text" className="ingredientForm name" value={ingredients[index].name} onChange={(event => this.handleName(event, index))} required />
                   <div>
                   <label htmlFor="ingredientAmount" className="ingredientAmount">Amount</label>
