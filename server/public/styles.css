@@ -7,7 +7,7 @@ li{
 }
 
 form{
-  padding: 0 3rem;
+  margin-left: 2rem;
 }
 .navHeader{
   font-family: 'Dancing Script', cursive;
@@ -103,6 +103,7 @@ nav {
     margin-top: .5rem;
   }
 
+
 }
 
 @media (min-width: 768px) {
@@ -115,6 +116,7 @@ nav {
   .form-row {
     margin-bottom: 24rem;
   }
+
 }
 
 @media (min-width: 1800px) and (orientation: landscape){
