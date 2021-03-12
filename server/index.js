@@ -36,6 +36,13 @@ app.get('/api/recipes', (req, res) => {
     });
 });
 
+app.get('/api/favorites/:id', (req, res) => {
+  const favoriteId = parseInt(req.params.id, 10);
+  const sql = `
+  select *
+    from "favorites`;
+});
+
 app.get('/api/recipes/:id', (req, res) => {
   const recipeId = parseInt(req.params.id, 10);
   if (!Number.isInteger(recipeId) || recipeId < 1) {
