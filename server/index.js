@@ -36,11 +36,44 @@ app.get('/api/recipes', (req, res) => {
     });
 });
 
+app.post('/api/favorites/', (req, res) => {
+  const { recipeId, userId } = req.body;
+  const sql = `
+  insert into "favorites" ("recipeId", "userId")
+    values($1, $2)
+    returning "userId"
+  `;
+
+  const params = [recipeId, userId];
+  db.query(sql, params)
+    .then(result => {
+      const favorite = result.rows;
+      res.json(favorite);
+    })
+    .catch(err => {
+      console.error(err);
+      res.status(500).json({
+        error: 'An unexpected error occured'
+      });
+    });
+});
+
 app.get('/api/favorites/:id', (req, res) => {
-  const favoriteId = parseInt(req.params.id, 10);
+  const recipeId = req.params.id;
+  const params = [recipeId];
   const sql = `
   select *
-    from "favorites`;
+  from "favorites"
+  order by "recipeId" desc
+  `;
+  db.query(sql)
+    .then(result => res.json(result.rows))
+    .catch(err => {
+      console.error(err);
+      res.status(500).json({
+        error: 'an unexpected error occured'
+      });
+    });
 });
 
 app.get('/api/recipes/:id', (req, res) => {

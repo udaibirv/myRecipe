@@ -4,6 +4,7 @@ import RecipeDetails from './pages/recipeDetails';
 import parseRoute from '../lib/parse-route';
 import Header from './pages/header';
 import RecipeForm from './pages/recipeForm';
+import RecipeFavorites from './pages/recipeFavorites';
 
 export default class App extends React.Component {
   constructor(props) {
@@ -33,6 +34,10 @@ export default class App extends React.Component {
 
     if (route.path === 'upload') {
       return <RecipeForm />;
+    }
+
+    if (route.path === 'favorites') {
+      return <RecipeFavorites/>;
     }
 
   }
