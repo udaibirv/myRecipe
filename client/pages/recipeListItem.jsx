@@ -2,6 +2,21 @@ import React from 'react';
 
 export default class RecipeListItem extends React.Component {
 
+  // getFavorites() {
+  //   const favBody = this.state.recipes.recipeId;
+  //   JSON.stringify(favBody);
+  //   fetch(`api/favorites/${this.state.recipes.recipeId}`, {
+  //     method: 'POST',
+  //     headers: {
+  //       'Content-Type': 'application/json'
+  //     },
+  //     body: favBody
+  //   })
+  //     .then(response => response.json())
+  //     .then(data => {
+  //       console.log(data);
+  //     });
+  // }
   render() {
     return (
       <a
@@ -15,6 +30,7 @@ export default class RecipeListItem extends React.Component {
                 </div>
 
       </a>
+
     );
   }
 

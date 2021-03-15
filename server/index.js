@@ -58,16 +58,18 @@ app.post('/api/favorites/', (req, res) => {
     });
 });
 
-app.get('/api/favorites/:id', (req, res) => {
-  const recipeId = req.params.id;
-  const params = [recipeId];
+app.get('/api/favorites/', (req, res) => {
   const sql = `
-  select *
+  select "recipeId"
   from "favorites"
   order by "recipeId" desc
   `;
   db.query(sql)
-    .then(result => res.json(result.rows))
+
+    .then(result => {
+      const favorite = result.rows;
+      res.json(favorite);
+    })
     .catch(err => {
       console.error(err);
       res.status(500).json({
