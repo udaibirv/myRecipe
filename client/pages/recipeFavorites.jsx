@@ -1,4 +1,5 @@
 import React from 'react';
+import RecipeListItem from './recipeListItem';
 
 export default class RecipeFavorites extends React.Component {
   constructor(props) {
@@ -16,7 +17,7 @@ export default class RecipeFavorites extends React.Component {
   }
 
   getFavorites() {
-    fetch('/api/favorites/')
+    fetch('/api/favorites/:id')
       .then(response => response.json())
       .then(data => this.setState({ favorites: data }));
     console.log(this.state.favorites);
@@ -24,18 +25,23 @@ export default class RecipeFavorites extends React.Component {
   }
 
   render() {
+    const favorite = this.state.favorites[0];
     return (
-    <a
-      href={`#recipes?recipeId=${this.state.favorites.recipeId}`}
-      className="text-dark card mb-4 shadow-sm text-decoration-none list-card">
-      <img className="card-img-top recipeImageList text-center " src={this.state.favorites.imageUrl} alt={this.state.favorites.recipeName} />
-      <div className="card-body">
-        <h4 className="card-title">{this.state.favorites.recipeName}</h4>
-        <p className="card-text">{this.state.favorites.recipeOrigin}</p>
-        <p className="card-text"> {`Equipment Needed: ${this.state.favorites.equipment}`}</p>
-      </div>
+      <div className="container-fluid list-container">
+        <div className="row recipeList">
 
-    </a>
+          {
+            favorite.map((recipe, index) => {
+              return (
+              <div key={recipe.recipeId} className="col-12 col-md-6 col-lg-4">
+                <RecipeListItem recipeId={recipe.recipeId} index={index} />
+              </div>
+
+              );
+            })
+          }
+        </div>
+      </div>
     );
   }
 }

@@ -55,10 +55,6 @@ CREATE TABLE "directions" (
 CREATE TABLE "favorites" (
   "recipeId" int NOT NULL,
   "userId" int NOT NUll,
-  "recipeName" TEXT NOT NULL,
-  "equipment" TEXT NOT NULL,
-  "recipeOrigin" TEXT NOT NULL,
-  "imageUrl" TEXT NOT NULL,
   primary key ("userId")
 ) WITH (
   OIDS=FALSE
@@ -68,5 +64,4 @@ ALTER TABLE "recipeCategories" ADD CONSTRAINT "recipeCategories_fk0" FOREIGN KEY
 ALTER TABLE "recipeCategories" ADD CONSTRAINT "recipeCategories_fk1" FOREIGN KEY ("categoryId") REFERENCES "categories"("categoryId");
 ALTER TABLE "directions" ADD CONSTRAINT "directions_fk0" FOREIGN KEY ("recipeId") REFERENCES "recipes"("recipeId");
 ALTER TABLE "ingredients" ADD CONSTRAINT "ingredients_fk0" FOREIGN KEY ("recipeId") REFERENCES "recipes"("recipeId");
-ALTER TABLE "favorites" ADD CONSTRAINT "favorites_fk0" FOREIGN KEY ("userId") REFERENCES "users"("userId");
-ALTER TABLE "favorites" ADD CONSTRAINT "favorites_fk1" FOREIGN KEY ("recipeId") REFERENCES "recipes" ('recipeId');
+ALTER TABLE "favorites" ADD CONSTRAINT "favorites_fk0" FOREIGN KEY ("recipeId") REFERENCES "recipes" ('recipeId');
