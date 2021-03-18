@@ -58,16 +58,13 @@ app.post('/api/favorites/', (req, res) => {
     });
 });
 
-app.get('/api/favorites/:id', (req, res) => {
-  const recipeId = req.params.id;
-  const params = [recipeId];
-  const sql = `
-  select "recipeId"
-  from "favorites"
-  order by "recipeId" desc
+app.get('/api/favorites/', (req, res) => {
+  const favoriteSql = `
+  select "userId"
+    from "favorites"
+    join "recipes" using ("userId")
   `;
-  db.query(sql, params)
-
+  db.query(favoriteSql)
     .then(result => {
       const favorite = result.rows;
       res.json(favorite);
