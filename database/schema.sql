@@ -55,7 +55,7 @@ CREATE TABLE "directions" (
 CREATE TABLE "favorites" (
   "recipeId" int NOT NULL,
   "userId" int NOT NUll,
-  primary key ("userId")
+  primary key ("userId", "recipeId")
 ) WITH (
   OIDS=FALSE
 );
