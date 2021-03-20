@@ -41,7 +41,7 @@ app.post('/api/favorites/', (req, res) => {
   const sql = `
   insert into "favorites" ("recipeId", "userId")
     values($1, $2)
-    returning "userId"
+    returning *
   `;
 
   const params = [recipeId, userId];
@@ -60,7 +60,7 @@ app.post('/api/favorites/', (req, res) => {
 
 app.get('/api/favorites/', (req, res) => {
   const favoriteSql = `
-  select "userId"
+  select *
     from "favorites"
     join "recipes" using ("userId")
   `;

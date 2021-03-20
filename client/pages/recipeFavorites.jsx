@@ -7,7 +7,6 @@ export default class RecipeFavorites extends React.Component {
     this.state = {
       favorites: []
     };
-    this.getFavorites = this.getFavorites.bind(this);
 
   }
 
