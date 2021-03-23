@@ -8,7 +8,6 @@ export default class RecipeList extends React.Component {
     this.state = {
       recipes: []
     };
-
   }
 
   componentDidMount() {
@@ -19,7 +18,6 @@ export default class RecipeList extends React.Component {
     fetch('/api/recipes/')
       .then(response => response.json())
       .then(data => {
-        console.log(data);
         this.setState({ recipes: data });
       });
   }
@@ -37,7 +35,9 @@ export default class RecipeList extends React.Component {
                     <RecipeListItem recipe={recipe} index={index} />
                     </div>
                   );
+
                 })
+
               }
 
         </div>

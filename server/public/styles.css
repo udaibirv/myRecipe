@@ -8,6 +8,9 @@ li{
 .list-card{
   max-width: 32rem;
 }
+.far, .fa-heart:hover{
+  cursor: pointer;
+}
 
 form{
   margin-left: 2rem;
@@ -74,11 +77,11 @@ nav {
   background-color: lightgray;
 }
 
-.upload, .list{
+.upload, .list, .favorites{
   margin-left: 10px;
   font-family: 'Old Standard TT', serif;
   color: #009FB7;
-  font-size: large;
+  font-size: medium;
 }
 
 .detail-text{
