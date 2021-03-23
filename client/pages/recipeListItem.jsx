@@ -7,7 +7,8 @@ export default class RecipeListItem extends React.Component {
       favorites: [{
         userId: '',
         recipeId: ''
-      }]
+      }],
+      isActive: false
     };
     this.postFavorites = this.postFavorites.bind(this);
   }
@@ -28,13 +29,23 @@ export default class RecipeListItem extends React.Component {
       .then(response => response.json())
       .then(data => {
         this.setState({ favorites: data });
-        console.log(data);
       });
+    this.setState({ isActive: true });
+
   }
 
   render() {
+    let heart = '';
+    if (this.state.isActive === true) {
+      heart = 'fas';
+    } else {
+      heart = 'far';
+    }
     return (
       <div>
+        <div className="icon">
+          <i className= {`${heart} fa-heart`} onClick={this.postFavorites}></i>
+        </div>
       <a
         href={`#recipes?recipeId=${this.props.recipe.recipeId}`}
         className ="text-dark card mb-4 shadow-sm text-decoration-none list-card">
@@ -47,7 +58,6 @@ export default class RecipeListItem extends React.Component {
 
       </a>
 
-      <button onClick={this.postFavorites}>Hi</button>
       </div>
 
     );
