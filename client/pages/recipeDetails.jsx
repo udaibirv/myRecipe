@@ -4,31 +4,34 @@ export default class RecipeDetails extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      recipe: null,
-      favorites: []
+      recipe: null
+      // favorites: [{
+      //   userId: '',
+      //   recipeId: ''
+      // }]
     };
-    this.postFavorites = this.postFavorites.bind(this);
+    // this.postFavorites = this.postFavorites.bind(this);
   }
 
-  postFavorites() {
-    const { userId } = this.state.favorites;
-    const recipeId = this.props.recipeId;
-    let body = { recipeId, userId };
-    body = JSON.stringify(body);
+  // postFavorites() {
+  //   const { userId } = this.state.favorites;
+  //   const recipeId = this.props.recipeId;
+  //   let body = { recipeId, userId };
+  //   body = JSON.stringify(body);
 
-    fetch('/api/favorites/', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: body
-    })
-      .then(response => response.json())
-      .then(data => {
-        this.setState({ favorites: data });
-        console.log(data);
-      });
-  }
+  //   fetch('/api/favorites/', {
+  //     method: 'POST',
+  //     headers: {
+  //       'Content-Type': 'application/json'
+  //     },
+  //     body: body
+  //   })
+  //     .then(response => response.json())
+  //     .then(data => {
+  //       this.setState({ favorites: data });
+  //       console.log(data);
+  //     });
+  // }
 
   componentDidMount() {
     fetch(`/api/recipes/${this.props.recipeId}`)
@@ -53,7 +56,7 @@ export default class RecipeDetails extends React.Component {
         <a href='#' className="text-secondary anchor">
           &lt; Back To Recipe List
         </a>
-        <button onClick={this.postFavorites}>Add</button>
+        {/* <button onClick={this.postFavorites}>Add</button> */}
         <div className="card detail-card shadow-sm" style={{ width: '35rem' }}>
           <img className="card-img-top recipeImage" src={recipeObject.imageUrl} />
           <div className="card-body">

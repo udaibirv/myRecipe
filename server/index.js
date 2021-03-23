@@ -37,7 +37,8 @@ app.get('/api/recipes', (req, res) => {
 });
 
 app.post('/api/favorites/', (req, res) => {
-  const { recipeId, userId } = req.body;
+  const userId = 1;
+  const { recipeId } = req.body;
   const sql = `
   insert into "favorites" ("recipeId", "userId")
     values($1, $2)
@@ -60,7 +61,7 @@ app.post('/api/favorites/', (req, res) => {
 
 app.get('/api/favorites/', (req, res) => {
   const favoriteSql = `
-  select *
+  select distinct "favorites"."recipeId"
     from "favorites"
     join "recipes" using ("userId")
   `;

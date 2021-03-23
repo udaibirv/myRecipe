@@ -1,5 +1,7 @@
 import React from 'react';
+import RecipeDetails from './recipeDetails';
 import RecipeListItem from './recipeListItem';
+import RecipeList from './recipeList';
 
 export default class RecipeFavorites extends React.Component {
   constructor(props) {
@@ -7,7 +9,6 @@ export default class RecipeFavorites extends React.Component {
     this.state = {
       favorites: []
     };
-
   }
 
   componentDidMount() {
@@ -16,16 +17,25 @@ export default class RecipeFavorites extends React.Component {
   }
 
   getFavorites() {
+    const { recipeId } = this.state;
     fetch('/api/favorites/')
       .then(response => response.json())
       .then(data => this.setState({ favorites: data }));
-    console.log(this.state.favorites);
 
   }
 
   render() {
+    const { favorites } = this.state;
+    console.log(favorites);
     return (
-    <h1>Hello</h1>
+      favorites.map((recipe, index) => {
+        return (
+        <div key={recipe.recipeId}>
+          <RecipeDetails recipeId={recipe.recipeId} recipe={recipe} index={index}/>
+
+        </div>
+        );
+      })
     );
   }
 }
