@@ -1,6 +1,8 @@
 require('dotenv/config');
 const express = require('express');
 const staticMiddleware = require('./static-middleware');
+const argon2 = require('argon2');
+const jwt = require('jsonwebtoken');
 const pg = require('pg');
 const db = new pg.Pool({
   connectionString: process.env.DATABASE_URL,
@@ -201,6 +203,74 @@ app.post('/api/recipe/', (req, res) => {
         error: 'an unexpected error occured'
       });
     });
+});
+
+app.post('/api/auth/sign-up', (req, res) => {
+  const { username, password } = req.body;
+  if (!username || !password) {
+    res.status(400).json({
+      error: 'username and password are required fields'
+    });
+  }
+  argon2
+    .hash(password)
+    .then(hashedPassword => {
+      const sql = `
+      insert into "users" ("username", "hashedPassword")
+      values ($1, $2)
+      returning "userId", "username"
+      `;
+      const params = [username, hashedPassword];
+      return db.query(sql, params);
+    })
+    .then(result => {
+      const [user] = result.rows;
+      res.status(201).json(user);
+    })
+    .catch(error => {
+      console.error(error);
+      res.status(400).json({
+        error: 'an unexpected error occured'
+      });
+    });
+});
+
+app.post('/api/auth/sign-in', (req, res) => {
+  const { username, password } = req.body;
+  if (!username || !password) {
+    res.status(400).json({
+      error: 'invalid login, please enter correct username or password'
+    });
+  }
+  const sql = `
+      select "userId", "hashedPassword"
+        from "users"
+        where "username" = $1
+    `;
+  const params = [username];
+  db.query(sql, params)
+    .then(result => {
+      const [user] = result.rows;
+      if (!user) {
+        res.status(401).json({
+          error: 'invalid login'
+        });
+      }
+      const { userId, hashedPassword } = user;
+      return argon2
+        .verify(hashedPassword, password)
+        .then(isMatching => {
+          if (!isMatching) {
+            res.status(401).json({
+              error: 'invalid login'
+            });
+          }
+          const payload = { userId, username };
+          const token = jwt.sign(payload, process.env.TOKEN_SECRET);
+          res.json({ token, user: payload });
+        });
+    });
+
 });
 
 app.listen(process.env.PORT, () => {
