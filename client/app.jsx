@@ -7,6 +7,7 @@ import RecipeForm from './pages/recipeForm';
 import RecipeFavorites from './pages/recipeFavorites';
 import decodeToken from '../lib/decode-token';
 import Auth from './pages/auth';
+import AppContext from './app-context';
 
 export default class App extends React.Component {
   constructor(props) {
@@ -38,6 +39,7 @@ export default class App extends React.Component {
     const { user, token } = result;
     window.localStorage.setItem('react-context-jwt', token);
     this.setState({ user });
+    window.location.hash('#list');
   }
 
   handleSignOut() {
@@ -48,6 +50,10 @@ export default class App extends React.Component {
   renderPage() {
     const { route } = this.state;
     if (route.path === '') {
+      return <Auth />;
+    }
+
+    if (route.path === 'list') {
       return <RecipeList />;
     }
 
@@ -72,12 +78,22 @@ export default class App extends React.Component {
   }
 
   render() {
+    if (this.state.isAuthorizing) {
+      return null;
+    }
+    const { user, route } = this.state;
+    const { handleSignIn, handleSignOut } = this;
+    const contextValue = { user, route, handleSignIn, handleSignOut };
     return (
+      <AppContext.Provider value={contextValue}>
     <>
     <Header />
       { this.renderPage() }
     </>
+    </AppContext.Provider>
     );
 
   }
 }
+
+App.contextType = AppContext;
