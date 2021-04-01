@@ -5,7 +5,8 @@ export default class AuthForm extends React.Component {
     super(props);
     this.state = {
       username: '',
-      password: ''
+      password: '',
+      email: ''
     };
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -13,30 +14,37 @@ export default class AuthForm extends React.Component {
   }
 
   handleChange(event) {
+    const { name, value, email } = event.target;
     this.setState({
-      [event.target.id]: event.target.value
+      [name]: value
     });
   }
 
   handleSubmit(event) {
     event.preventDefault();
-    const { action } = this.props;
-    const requestBody = {
+    // const { action } = this.props;
+    // const requestBody = {
+    //   method: 'POST',
+    //   headers: {
+    //     'Content-Type': 'application/json'
+    //   },
+    //   body: JSON.stringify(this.state)
+    // };
+    fetch('/api/auth/sign-up', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
       },
       body: JSON.stringify(this.state)
-    };
-    fetch(`/api/auth/${action}`, requestBody)
+    })
       .then(res => res.json())
       .then(data => {
-        if (action === 'sign-up') {
-          window.location.hash = 'sign-in';
-        } else if (data.user && data.token) {
-          this.props.onSignIn(data);
-        }
+        window.location.hash = '#list';
+        //  else if (data.user && data.token) {
+        //   this.props.onSignIn(data);
+        // }
       });
+
   }
 
   render() {
@@ -64,6 +72,12 @@ export default class AuthForm extends React.Component {
                   Username
                 </label>
                 <input required id="username" type="text" name="username" onChange={handleChange}/>
+              </div>
+              <div className="mb-3">
+                <label htmlFor="email">
+                  Email
+                </label>
+                <input required id="email" type="text" name="email" onChange={handleChange}/>
               </div>
               <div className="mb-3">
                 <label htmlFor="password">

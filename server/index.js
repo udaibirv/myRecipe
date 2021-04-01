@@ -39,7 +39,7 @@ app.get('/api/recipes', (req, res) => {
 });
 
 app.post('/api/favorites/', (req, res) => {
-  const userId = 1;
+  // const userId = 1;
   const { recipeId } = req.body;
   const sql = `
   insert into "favorites" ("recipeId", "userId")
@@ -47,7 +47,7 @@ app.post('/api/favorites/', (req, res) => {
     returning *
   `;
 
-  const params = [recipeId, userId];
+  const params = [recipeId];
   db.query(sql, params)
     .then(result => {
       const favorite = result.rows;
@@ -65,7 +65,7 @@ app.get('/api/favorites/', (req, res) => {
   const favoriteSql = `
   select distinct "favorites"."recipeId"
     from "favorites"
-    join "recipes" using ("userId")
+    join "users" using ("userId")
   `;
   db.query(favoriteSql)
     .then(result => {
@@ -140,7 +140,7 @@ where r."recipeId" = $1;
 });
 
 app.post('/api/recipe/', (req, res) => {
-  const userId = 1;
+  // const userId = 1;
   const { recipeName, equipment, recipeOrigin, instructions, ingredients, imageUrl } = req.body;
   const recipeSql = `
     insert into "recipes" ("recipeName", "equipment", "recipeOrigin", "userId", "imageUrl")
@@ -206,21 +206,21 @@ app.post('/api/recipe/', (req, res) => {
 });
 
 app.post('/api/auth/sign-up', (req, res) => {
-  const { username, password } = req.body;
-  if (!username || !password) {
+  const { username, password, email } = req.body;
+  if (!username || !password || !email) {
     res.status(400).json({
-      error: 'username and password are required fields'
+      error: 'username, password, and email are required fields'
     });
   }
   argon2
     .hash(password)
     .then(hashedPassword => {
       const sql = `
-      insert into "users" ("username", "hashedPassword")
-      values ($1, $2)
+      insert into "users" ("username", "hashedPassword", "email")
+      values ($1, $2, $3)
       returning "userId", "username"
       `;
-      const params = [username, hashedPassword];
+      const params = [username, hashedPassword, email];
       return db.query(sql, params);
     })
     .then(result => {
