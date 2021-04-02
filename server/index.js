@@ -39,15 +39,14 @@ app.get('/api/recipes', (req, res) => {
 });
 
 app.post('/api/favorites/', (req, res) => {
-  // const userId = 1;
-  const { recipeId } = req.body;
+  const { recipeId, userId } = req.body;
   const sql = `
   insert into "favorites" ("recipeId", "userId")
     values($1, $2)
-    returning *
+    returning "userId"
   `;
 
-  const params = [recipeId];
+  const params = [recipeId, userId];
   db.query(sql, params)
     .then(result => {
       const favorite = result.rows;
@@ -61,13 +60,16 @@ app.post('/api/favorites/', (req, res) => {
     });
 });
 
-app.get('/api/favorites/', (req, res) => {
+app.get('/api/favorites/:userId', (req, res) => {
+  const userId = req.params.id;
+  const params = [userId];
   const favoriteSql = `
   select distinct "favorites"."recipeId"
     from "favorites"
-    join "users" using ("userId")
+    join "recipes" using ("recipeId")
+    where "favorites"."userId" = $1
   `;
-  db.query(favoriteSql)
+  db.query(favoriteSql, params)
     .then(result => {
       const favorite = result.rows;
       res.json(favorite);

@@ -40,9 +40,6 @@ export default class AuthForm extends React.Component {
       .then(res => res.json())
       .then(data => {
         window.location.hash = '#list';
-        //  else if (data.user && data.token) {
-        //   this.props.onSignIn(data);
-        // }
       });
 
   }

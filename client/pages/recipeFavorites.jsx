@@ -15,7 +15,7 @@ export default class RecipeFavorites extends React.Component {
   }
 
   getFavorites() {
-    fetch('/api/favorites/')
+    fetch('/api/favorites/:userId')
       .then(response => response.json())
       .then(data => this.setState({ favorites: data }));
 

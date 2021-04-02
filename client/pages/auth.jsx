@@ -16,9 +16,6 @@ export default class AuthPage extends React.Component {
       <div className="row align-items-center">
         <div className="col-12 col-sm-10 col-md-8">
           <header className="text-center">
-            <i className="fas fas-bolt">
-              myRecipe
-            </i>
             <p className="text-muted"> {welcomeMessage}</p>
           </header>
           <div className="card">
