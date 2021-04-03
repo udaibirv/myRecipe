@@ -47,6 +47,7 @@ app.post('/api/favorites/', (req, res) => {
   `;
 
   const params = [recipeId, userId];
+  console.log('userId: ', userId);
   db.query(sql, params)
     .then(result => {
       const favorite = result.rows;
