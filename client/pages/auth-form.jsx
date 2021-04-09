@@ -6,7 +6,8 @@ export default class AuthForm extends React.Component {
     this.state = {
       username: '',
       password: '',
-      email: ''
+      email: '',
+      userId: ''
     };
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -14,7 +15,7 @@ export default class AuthForm extends React.Component {
   }
 
   handleChange(event) {
-    const { name, value, email } = event.target;
+    const { name, value } = event.target;
     this.setState({
       [name]: value
     });
@@ -39,6 +40,7 @@ export default class AuthForm extends React.Component {
     })
       .then(res => res.json())
       .then(data => {
+        console.log('Data: ', data);
         window.location.hash = '#list';
       });
 

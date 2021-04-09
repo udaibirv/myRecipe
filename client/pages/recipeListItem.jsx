@@ -1,11 +1,11 @@
 import React from 'react';
-
+import AuthForm from './auth-form';
 export default class RecipeListItem extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       favorites: [{
-        userId: '',
+        // userId: '',
         recipeId: ''
       }],
       isActive: false
@@ -13,10 +13,22 @@ export default class RecipeListItem extends React.Component {
     this.postFavorites = this.postFavorites.bind(this);
   }
 
-  postFavorites() {
-    const { userId } = this.state.favorites;
+  postFavorites(event) {
+    const userId = this.props.userId;
+    const state = this.state;
+    const { favorites } = state;
+    const bodyObject = { favorites };
+
+    // let userId;
+    // favorites.map((value, index) => {
+    //   return (
+    //     userId = favorites[index].userId
+
+    //   );
+    // });
     const recipeId = this.props.recipe.recipeId;
     let body = { recipeId, userId };
+    console.log('Body: ', body);
     body = JSON.stringify(body);
 
     fetch('/api/favorites/', {
@@ -29,9 +41,11 @@ export default class RecipeListItem extends React.Component {
       .then(response => response.json())
       .then(data => {
         this.setState({ favorites: data });
+      })
+      .catch(error => {
+        console.error('Error: ', error);
       });
     this.setState({ isActive: true });
-
   }
 
   render() {

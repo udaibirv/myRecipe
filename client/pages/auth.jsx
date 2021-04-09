@@ -3,12 +3,12 @@ import AuthForm from './auth-form';
 import AppContext from '../app-context';
 export default class AuthPage extends React.Component {
   render() {
-    const { route, handleSignIn } = this.context;
+    const { route, handleSignIn, user } = this.context;
 
     let welcomeMessage;
-    if (route.path === 'sign-in') {
+    if (route.path === '#') {
       welcomeMessage = 'Please Sign In!';
-    } else {
+    } else if (user) {
       welcomeMessage = 'Create an Account to Continue!';
     }
 
