@@ -4,28 +4,29 @@ export default class RecipeListItem extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      favorites: [{
-        // userId: '',
+      favorites: {
+        userId: '',
         recipeId: ''
-      }],
+      },
       isActive: false
     };
     this.postFavorites = this.postFavorites.bind(this);
   }
 
   postFavorites(event) {
-    const userId = this.props.userId;
-    const state = this.state;
-    const { favorites } = state;
-    const bodyObject = { favorites };
+    const { favorites } = this.state;
+    for (const key in favorites) {
+      console.log(key.userId);
+    }
 
     // let userId;
     // favorites.map((value, index) => {
     //   return (
-    //     userId = favorites[index].userId
+    //     userId = favorites[index].userId.value
 
     //   );
     // });
+    console.log('userId: ', userId);
     const recipeId = this.props.recipe.recipeId;
     let body = { recipeId, userId };
     console.log('Body: ', body);
