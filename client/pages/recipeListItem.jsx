@@ -1,5 +1,4 @@
 import React from 'react';
-import AuthForm from './auth-form';
 export default class RecipeListItem extends React.Component {
   constructor(props) {
     super(props);
@@ -13,21 +12,12 @@ export default class RecipeListItem extends React.Component {
     this.postFavorites = this.postFavorites.bind(this);
   }
 
-  postFavorites(event) {
+  postFavorites(props) {
     const { favorites } = this.state;
-    for (const key in favorites) {
-      console.log(key.userId);
-    }
 
-    // let userId;
-    // favorites.map((value, index) => {
-    //   return (
-    //     userId = favorites[index].userId.value
-
-    //   );
-    // });
-    console.log('userId: ', userId);
     const recipeId = this.props.recipe.recipeId;
+    const userId = favorites.userId;
+    console.log(this.props.user);
     let body = { recipeId, userId };
     console.log('Body: ', body);
     body = JSON.stringify(body);

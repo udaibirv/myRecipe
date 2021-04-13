@@ -1,6 +1,6 @@
 set client_min_messages to warning;
 CREATE TABLE "users" (
-  "userId" serial NOT NULL,
+  "userId" int NOT NULL,
   "username" TEXT NOT NULL,
   "hashedPassword" TEXT NOT NULL,
   "email" TEXT NOT NULL,
