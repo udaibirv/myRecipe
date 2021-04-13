@@ -17,9 +17,8 @@ export default class RecipeListItem extends React.Component {
 
     const recipeId = this.props.recipe.recipeId;
     const userId = favorites.userId;
-    console.log(this.props.user);
     let body = { recipeId, userId };
-    console.log('Body: ', body);
+
     body = JSON.stringify(body);
 
     fetch('/api/favorites/', {

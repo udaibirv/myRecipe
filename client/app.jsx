@@ -39,7 +39,7 @@ export default class App extends React.Component {
     const { user, token } = result;
     window.localStorage.setItem('react-context-jwt', token);
     this.setState({ user });
-    window.location.hash('#list');
+
   }
 
   handleSignOut() {
