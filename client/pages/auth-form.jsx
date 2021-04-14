@@ -42,7 +42,7 @@ export default class AuthForm extends React.Component {
     })
       .then(res => res.json())
       .then(data => {
-        console.log('Data: ', data);
+        this.setState({ users: data });
         window.location.hash = '#list';
       });
 

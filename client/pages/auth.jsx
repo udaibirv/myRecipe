@@ -6,7 +6,7 @@ export default class AuthPage extends React.Component {
     const { route, handleSignIn, user } = this.context;
 
     let welcomeMessage;
-    if (route.path === '#') {
+    if (route.path === 'sign-in') {
       welcomeMessage = 'Please Sign In!';
     } else if (user === null) {
       welcomeMessage = 'Create an Account to Continue!';

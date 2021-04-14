@@ -26,6 +26,7 @@ export default class App extends React.Component {
       this.setState({ route: parseRoute(window.location.hash) });
     });
     const token = window.localStorage.getItem('react-context-jwt');
+
     let user;
     if (token) {
       user = decodeToken(token);

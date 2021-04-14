@@ -25,6 +25,7 @@ export default class RecipeListItem extends React.Component {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
+
       },
       body: body
     })

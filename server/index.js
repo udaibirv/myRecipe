@@ -42,7 +42,7 @@ app.post('/api/favorites/', (req, res) => {
   const { recipeId, userId } = req.body;
   const sql = `
   insert into "favorites" ("recipeId", "userId")
-    values($1, $2)
+    values($1)
     returning "userId"
   `;
 
