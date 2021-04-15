@@ -7,8 +7,7 @@ export default class AuthForm extends React.Component {
       users: {
         username: '',
         password: '',
-        email: '',
-        userId: ''
+        email: ''
       }
     };
     this.handleChange = this.handleChange.bind(this);
@@ -25,14 +24,6 @@ export default class AuthForm extends React.Component {
 
   handleSubmit(event) {
     event.preventDefault();
-    // const { action } = this.props;
-    // const requestBody = {
-    //   method: 'POST',
-    //   headers: {
-    //     'Content-Type': 'application/json'
-    //   },
-    //   body: JSON.stringify(this.state)
-    // };
     fetch('/api/auth/sign-up', {
       method: 'POST',
       headers: {
@@ -42,6 +33,7 @@ export default class AuthForm extends React.Component {
     })
       .then(res => res.json())
       .then(data => {
+        console.log(data);
         this.setState({ users: data });
         window.location.hash = '#list';
       });
@@ -49,20 +41,7 @@ export default class AuthForm extends React.Component {
   }
 
   render() {
-    const { action } = this.props;
     const { handleChange, handleSubmit } = this;
-    let redirect;
-    let redirectMessage;
-    let redirectButton;
-    if (action === 'sign-up') {
-      redirect = '#sign-in';
-      redirectMessage = 'Sign in Instead';
-      redirectButton = 'Register';
-    } else if (action === 'sign-in') {
-      redirect = '#sign-up';
-      redirectMessage = 'Register Now';
-      redirectButton = 'Log In';
-    }
     return (
       <div className="container-fluid">
         <div className="row form-row justify-content-center align-items-center">

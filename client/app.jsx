@@ -8,6 +8,7 @@ import RecipeFavorites from './pages/recipeFavorites';
 import decodeToken from '../lib/decode-token';
 import Auth from './pages/auth';
 import AppContext from './app-context';
+import AuthForm from './pages/auth-form';
 
 export default class App extends React.Component {
   constructor(props) {
@@ -17,8 +18,9 @@ export default class App extends React.Component {
       user: null,
       isAuthorizing: true
     };
-    this.handleSignIn = this.handleSignIn.bind(this);
-    this.handleSignOut = this.handleSignOut.bind(this);
+    // this.handleSignIn = this.handleSignIn.bind(this);
+    // this.handleSignOut = this.handleSignOut.bind(this);
+
   }
 
   componentDidMount() {
@@ -27,13 +29,16 @@ export default class App extends React.Component {
     });
     const token = window.localStorage.getItem('react-context-jwt');
 
-    let user;
-    if (token) {
-      user = decodeToken(token);
-    } else {
-      user = null;
-    }
-    this.setState({ user, isAuthorizing: false });
+    // const token = window.localStorage.getItem('react-context-jwt');
+    // console.log(window.localStorage);
+
+    // let user;
+    // if (token) {
+    //   user = decodeToken(token);
+    // } else {
+    //   user = null;
+    // }
+    // this.setState({ user, isAuthorizing: false });
   }
 
   handleSignIn(result) {
@@ -50,12 +55,12 @@ export default class App extends React.Component {
 
   renderPage() {
     const { route } = this.state;
-    if (route.path === '') {
-      return <Auth />;
-    }
-
     if (route.path === 'list') {
       return <RecipeList />;
+    }
+
+    if (route.path === '') {
+      return <AuthForm />;
     }
 
     if (route.path === 'recipes') {
@@ -79,21 +84,21 @@ export default class App extends React.Component {
   }
 
   render() {
-    if (this.state.isAuthorizing) {
-      return null;
-    }
-    const { user, route } = this.state;
-    const { handleSignIn, handleSignOut } = this;
-    const contextValue = { user, route, handleSignIn, handleSignOut };
     return (
-      <AppContext.Provider value={contextValue}>
+    // if (this.state.isAuthorizing) {
+    //   return null;
+    // }
+    // const { user, route } = this.state;
+    // const { handleSignIn, handleSignOut } = this;
+    // const contextValue = { user, route, handleSignIn, handleSignOut };
+    // return (
+    //   <AppContext.Provider value={contextValue}>
     <>
-    <Header />
-      { this.renderPage() }
+    <Header />;
+    { this.renderPage()}
     </>
-    </AppContext.Provider>
+    // </AppContext.Provider>
     );
-
   }
 }
 

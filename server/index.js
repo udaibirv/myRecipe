@@ -42,7 +42,7 @@ app.post('/api/favorites/', (req, res) => {
   const { recipeId, userId } = req.body;
   const sql = `
   insert into "favorites" ("recipeId", "userId")
-    values($1)
+    values($1, $2)
     returning "userId"
   `;
 
@@ -221,7 +221,7 @@ app.post('/api/auth/sign-up', (req, res) => {
       const sql = `
       insert into "users" ("username", "hashedPassword", "email")
       values ($1, $2, $3)
-      returning "userId", "username"
+      returning "userId", "username", "email"
       `;
       const params = [username, hashedPassword, email];
       return db.query(sql, params);
@@ -271,6 +271,15 @@ app.post('/api/auth/sign-in', (req, res) => {
           const payload = { userId, username };
           const token = jwt.sign(payload, process.env.TOKEN_SECRET);
           res.json({ token, user: payload });
+          console.log('Payload:', payload);
+          console.log('token: ', token);
+
+        })
+        .catch(error => {
+          console.error(error);
+          res.status(400).json({
+            error: 'an unexpected error occured'
+          });
         });
     });
 
