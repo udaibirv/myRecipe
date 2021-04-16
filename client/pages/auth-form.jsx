@@ -33,7 +33,6 @@ export default class AuthForm extends React.Component {
     })
       .then(res => res.json())
       .then(data => {
-        console.log(data);
         this.setState({ users: data });
         window.location.hash = '#list';
       });
@@ -42,6 +41,16 @@ export default class AuthForm extends React.Component {
 
   render() {
     const { handleChange, handleSubmit } = this;
+    const { action } = this.props;
+    const alternateActionHref = action === 'sign-up'
+      ? '#sign-in'
+      : '#sign-up';
+    const alternatActionText = action === 'sign-up'
+      ? 'Sign in instead'
+      : 'Register now';
+    const submitButtonText = action === 'sign-up'
+      ? 'Register'
+      : 'Log In';
     return (
       <div className="container-fluid">
         <div className="row form-row justify-content-center align-items-center">
@@ -65,11 +74,11 @@ export default class AuthForm extends React.Component {
                 </label>
                 <input required id="password" type="password" name="password" onChange={handleChange} />
               </div>
-              <a className="text-muted" href={redirect}>
-                {redirectMessage}
+              <a className="text-muted" href={'#sign-in'}>
+                Already have an account?
               </a>
               <button type="submit" className="btn btn-primary">
-                {redirectButton}
+                {submitButtonText}
               </button>
             </form>
           </div>

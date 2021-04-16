@@ -241,7 +241,7 @@ app.post('/api/auth/sign-up', (req, res) => {
 app.post('/api/auth/sign-in', (req, res) => {
   const { username, password } = req.body;
   if (!username || !password) {
-    res.status(400).json({
+    return res.status(400).json({
       error: 'invalid login, please enter correct username or password'
     });
   }
@@ -255,7 +255,7 @@ app.post('/api/auth/sign-in', (req, res) => {
     .then(result => {
       const [user] = result.rows;
       if (!user) {
-        res.status(401).json({
+        return res.status(401).json({
           error: 'invalid login'
         });
       }
@@ -264,22 +264,20 @@ app.post('/api/auth/sign-in', (req, res) => {
         .verify(hashedPassword, password)
         .then(isMatching => {
           if (!isMatching) {
-            res.status(401).json({
+            return res.status(401).json({
               error: 'invalid login'
             });
           }
+
+          // console.log('Payload:', payload);
+          // console.log('token: ', token);
           const payload = { userId, username };
           const token = jwt.sign(payload, process.env.TOKEN_SECRET);
-          res.json({ token, user: payload });
-          console.log('Payload:', payload);
-          console.log('token: ', token);
-
+          return res.json({ token, user: payload });
         })
         .catch(error => {
           console.error(error);
-          res.status(400).json({
-            error: 'an unexpected error occured'
-          });
+
         });
     });
 
