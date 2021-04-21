@@ -5,7 +5,7 @@ export default class RecipeListItem extends React.Component {
     super(props);
     this.state = {
       favorites: {
-        userId: null,
+        userId: '',
         recipeId: ''
       },
       isActive: false
@@ -15,7 +15,8 @@ export default class RecipeListItem extends React.Component {
 
   postFavorites(event) {
     const recipeId = this.props.recipe.recipeId;
-    const userId = this.state.favorites.userId;
+    const userId = parseInt(this.state.favorites.userId, 10);
+    // parseInt(userId, 10);
     let body = { recipeId, userId };
 
     body = JSON.stringify(body);
@@ -31,7 +32,7 @@ export default class RecipeListItem extends React.Component {
       .then(response => response.json())
       .then(data => {
         console.log(data);
-        this.setState({ favorites: data });
+        this.setState({ favorites: parseInt(data, 10) });
       })
       .catch(error => {
         console.error('Error: ', error);

@@ -39,11 +39,12 @@ app.get('/api/recipes', (req, res) => {
 });
 
 app.post('/api/favorites/', (req, res) => {
-  const { userId, recipeId } = req.body;
+  const { recipeId, userId } = req.body;
   const params = [recipeId, userId];
   const sql = `
   insert into "favorites" ("recipeId", "userId")
     values($1, $2)
+    where "users"."userId" = $2
     returning "userId"
   `;
 

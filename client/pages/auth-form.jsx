@@ -7,7 +7,9 @@ export default class AuthForm extends React.Component {
       users: {
         username: '',
         password: '',
-        email: ''
+        email: '',
+        userId: ''
+
       }
     };
     this.handleChange = this.handleChange.bind(this);
@@ -34,6 +36,7 @@ export default class AuthForm extends React.Component {
       .then(res => res.json())
       .then(data => {
         this.setState({ users: data });
+        console.log('data :', data);
         window.location.hash = '#list';
       });
 
