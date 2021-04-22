@@ -40,12 +40,12 @@ app.get('/api/recipes', (req, res) => {
 
 app.post('/api/favorites/', (req, res) => {
   const { recipeId, userId } = req.body;
+  console.log('Req Body: ', req.body);
   const params = [recipeId, userId];
   const sql = `
   insert into "favorites" ("recipeId", "userId")
     values($1, $2)
-    where "users"."userId" = $2
-    returning "userId"
+    returning *
   `;
 
   // console.log('recipeId: ', recipeId, 'userId: ', userId);
@@ -75,6 +75,7 @@ app.get('/api/favorites/:userId', (req, res) => {
     .then(result => {
       const favorite = result.rows;
       res.json(favorite);
+      console.log('favorite: ', favorite);
     })
     .catch(err => {
       console.error(err);
@@ -145,7 +146,7 @@ where r."recipeId" = $1;
 
 app.post('/api/recipe/', (req, res) => {
   // const userId = 1;
-  const { recipeName, equipment, recipeOrigin, instructions, ingredients, imageUrl } = req.body;
+  const { recipeName, equipment, recipeOrigin, instructions, ingredients, imageUrl, userId } = req.body;
   const recipeSql = `
     insert into "recipes" ("recipeName", "equipment", "recipeOrigin", "userId", "imageUrl")
       values ($1, $2, $3, $4, $5)

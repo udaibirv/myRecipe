@@ -8,7 +8,7 @@ export default class AuthForm extends React.Component {
         username: '',
         password: '',
         email: '',
-        userId: ''
+        userId: null
 
       }
     };
@@ -38,6 +38,8 @@ export default class AuthForm extends React.Component {
         this.setState({ users: data });
         console.log('data :', data);
         window.location.hash = '#list';
+        window.localStorage.setItem('userId', data.userId);
+        console.log(window.localStorage);
       });
 
   }
