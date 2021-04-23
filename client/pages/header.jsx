@@ -2,6 +2,24 @@ import React from 'react';
 import AppContext from '../app-context';
 
 export default class Header extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      user: null
+    };
+
+    this.handleSignOut = this.handleSignOut.bind(this);
+
+  }
+
+  handleSignOut() {
+    window.localStorage.removeItem('token');
+    window.localStorage.removeItem('userId');
+    this.setState({ user: null });
+    console.log(window.localStorage);
+    window.location.hash = '#sign-in';
+  }
+
   render() {
     const { user, handleSignOut } = <AppContext />;
     return (
@@ -14,7 +32,7 @@ export default class Header extends React.Component {
       </div>
       <div>
         {user !== null &&
-          <button className="btn btn-dark" onClick={handleSignOut}>
+          <button className="btn btn-dark" onClick={this.handleSignOut}>
             Sign Out
           </button>
         }

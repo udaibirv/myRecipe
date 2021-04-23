@@ -66,7 +66,7 @@ app.get('/api/favorites/:userId', (req, res) => {
   const userId = req.params.id;
   const params = [userId];
   const favoriteSql = `
-  select distinct "favorites"."recipeId"
+  select distinct "favorites"."userId"
     from "favorites"
     join "recipes" using ("recipeId")
     where "favorites"."userId" = $1
@@ -75,7 +75,7 @@ app.get('/api/favorites/:userId', (req, res) => {
     .then(result => {
       const favorite = result.rows;
       res.json(favorite);
-      console.log('favorite: ', favorite);
+      console.log(favorite);
     })
     .catch(err => {
       console.error(err);

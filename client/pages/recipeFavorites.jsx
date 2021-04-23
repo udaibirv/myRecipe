@@ -20,8 +20,9 @@ export default class RecipeFavorites extends React.Component {
     fetch('/api/favorites/:userId')
       .then(response => response.json())
       .then(data => {
+        console.log('Data: ', data);
         this.setState({ favorites: data });
-        console.log(data);
+        console.log(this.state);
       });
 
   }
@@ -29,14 +30,15 @@ export default class RecipeFavorites extends React.Component {
   render() {
     const { favorites } = this.state;
     return (
-      favorites.map((recipe, index) => {
-        return (
-          <div key={recipe.recipeId} className="col-12 col-md-6 col-lg-4">
-            <RecipeDetails recipe={recipe} recipeId={recipe.recipeId} index={index} />
-          </div>
-        );
+      <h1>Hi</h1>
+      // favorites.map((recipe, index) => {
+      //   return (
+      //     <div key={recipe.recipeId} className="col-12 col-md-6 col-lg-4">
+      //       <RecipeDetails recipe={recipe} recipeId={recipe.recipeId} index={index} />
+      //     </div>
+      //   );
 
-      })
+    // })
 
     //   favorites.map((recipe, index) => {
     //     return (
