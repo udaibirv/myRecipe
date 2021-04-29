@@ -17,7 +17,7 @@ export default class Header extends React.Component {
     window.localStorage.removeItem('userId');
     this.setState({ user: null });
     console.log(window.localStorage);
-    window.location.hash = '#sign-in';
+    window.location.hash = '#sign-up';
   }
 
   render() {
