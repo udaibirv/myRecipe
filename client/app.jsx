@@ -84,9 +84,9 @@ export default class App extends React.Component {
       return <RecipeFavorites/>;
     }
 
-    if (route.path === 'sign-in' || route.path === 'sign-up') {
-      return <Auth />;
-    }
+    // if (route.path === 'sign-in' || route.path === 'sign-up') {
+    //   return <Auth />;
+    // }
 
   }
 

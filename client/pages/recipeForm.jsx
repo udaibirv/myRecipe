@@ -1,5 +1,4 @@
 import React from 'react';
-import RecipeList from './recipeList';
 
 export default class RecipeForm extends React.Component {
   constructor(props) {

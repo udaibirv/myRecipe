@@ -252,6 +252,7 @@ app.post('/api/auth/sign-in', (req, res) => {
       select "userId", "hashedPassword"
         from "users"
         where "username" = $1
+
     `;
   const params = [username];
   db.query(sql, params)

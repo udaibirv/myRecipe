@@ -12,12 +12,11 @@ export default class Header extends React.Component {
 
   }
 
-  handleSignOut() {
+  handleSignOut(event) {
     window.localStorage.removeItem('token');
-    window.localStorage.removeItem('userId');
     this.setState({ user: null });
     console.log(window.localStorage);
-    window.location.hash = '#sign-up';
+    window.location.hash = '';
   }
 
   render() {

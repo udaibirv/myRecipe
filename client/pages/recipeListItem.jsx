@@ -5,7 +5,7 @@ export default class RecipeListItem extends React.Component {
     super(props);
     this.state = {
       favorites: {
-        userId: JSON.parse(window.localStorage.getItem('userId')),
+        userId: window.localStorage.getItem('userId'),
         recipeId: ''
       },
       isActive: false

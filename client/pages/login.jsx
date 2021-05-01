@@ -28,9 +28,11 @@ export default class Login extends React.Component {
     })
       .then(res => res.json())
       .then(data => {
-        window.localStorage.setItem('react-context-jwt', token);
+        window.localStorage.setItem('react-context-jwt', data.user.token);
+        window.localStorage.setItem('userId', data.user.userId);
         window.location.hash = '#list';
         console.log('data: ', data);
+        console.log(localStorage);
       });
   }
 

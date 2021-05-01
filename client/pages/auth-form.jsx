@@ -8,7 +8,7 @@ export default class AuthForm extends React.Component {
         username: '',
         password: '',
         email: '',
-        userId: null
+        userId: ''
 
       }
     };
