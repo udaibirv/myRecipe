@@ -31,31 +31,35 @@ export default class Login extends React.Component {
         window.localStorage.setItem('react-context-jwt', data.user.token);
         window.localStorage.setItem('userId', data.user.userId);
         window.location.hash = '#list';
-        console.log('data: ', data);
-        console.log(localStorage);
+
+      })
+      .catch(err => {
+        console.error(err);
+        alert('Invalid Login, Please Try Again');
       });
   }
 
   render() {
     const { handleSignIn, handleChange } = this;
     return (
-      <div className="container-fluid">
+      <div className="container-fluid bg-image">
         <div className="row form-row justify-content-center align-items-center">
-          <div className="col">
-            <form onSubmit={handleSignIn}>
+          <div className="col justify-content-center align-items-center text-center">
+            <h4 className="login-message">Please Sign In to Continue!</h4>
+            <form className="login-form"onSubmit={handleSignIn}>
               <div className="mb-3">
-                <label htmlFor="username">
+                <label className="username"htmlFor="username">
                   Username
                 </label>
                 <input required id="username" type="text" name="username" onChange={handleChange} />
               </div>
               <div className="mb-3">
-                <label htmlFor="password">
+                <label className="password"htmlFor="password">
                   Password
                 </label>
                 <input required id="password" type="password" name="password" onChange={handleChange} />
               </div>
-              <button type="submit">Enter</button>
+              <button className="btn login-button" type="submit">Sign In</button>
             </form>
           </div>
         </div>

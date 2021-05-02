@@ -21,8 +21,6 @@ export default class RecipeFavorites extends React.Component {
       .then(response => response.json())
       .then(favorites => {
         this.setState({ favorites });
-        console.log('Data: ', favorites);
-        console.log(this.state);
       });
 
   }
@@ -30,24 +28,15 @@ export default class RecipeFavorites extends React.Component {
   render() {
     const { favorites } = this.state;
     return (
-      // <h1>Hi</h1>
       favorites.map((recipe, index) => {
         return (
-          <div key={recipe.recipeId} className="col-12 col-md-6 col-lg-4 ">
+          <div key={recipe.recipeId} className="col-12 col-md-6 col-lg-4 favs ">
             <RecipeDetails recipe={recipe} recipeId={recipe.recipeId} index={index} />
           </div>
         );
 
       })
 
-    //   favorites.map((recipe, index) => {
-    //     return (
-    //   <div key={recipe.recipeId}>
-    //     <RecipeDetails recipeId={recipe.recipeId} recipe={recipe} index={index}/>
-
-    // </div>
-    //     );
-    //   })
     );
   }
 }

@@ -5,8 +5,6 @@ import parseRoute from '../lib/parse-route';
 import Header from './pages/header';
 import RecipeForm from './pages/recipeForm';
 import RecipeFavorites from './pages/recipeFavorites';
-import decodeToken from '../lib/decode-token';
-import Auth from './pages/auth';
 import AppContext from './app-context';
 import AuthForm from './pages/auth-form';
 import Login from './pages/login';
@@ -19,8 +17,6 @@ export default class App extends React.Component {
       user: null,
       isAuthorizing: true
     };
-    // this.handleSignIn = this.handleSignIn.bind(this);
-    // this.handleSignOut = this.handleSignOut.bind(this);
 
   }
 
@@ -28,33 +24,7 @@ export default class App extends React.Component {
     window.addEventListener('hashchange', () => {
       this.setState({ route: parseRoute(window.location.hash) });
     });
-    // const token = window.localStorage.getItem('react-context-jwt');
-
-    // const token = window.localStorage.getItem('react-context-jwt');
-    // console.log(window.localStorage);
-
-    // let user;
-    // if (token) {
-    //   user = decodeToken(token);
-    // } else {
-    //   user = null;
-    // }
-    // this.setState({ user, isAuthorizing: false });
   }
-
-  // handleSignIn(result) {
-  //   const { user, token } = result;
-  //   decodeToken(token);
-  //   window.localStorage.setItem('react-context-jwt', token);
-  //   this.setState({ user });
-
-  // }
-
-  // handleSignOut() {
-  //   window.localStorage.removeItem('react-context-jwt');
-  //   this.setState({ user: null });
-  //   console.log(this.state);
-  // }
 
   renderPage() {
     const { route } = this.state;
@@ -83,10 +53,6 @@ export default class App extends React.Component {
     if (route.path === 'favorites') {
       return <RecipeFavorites/>;
     }
-
-    // if (route.path === 'sign-in' || route.path === 'sign-up') {
-    //   return <Auth />;
-    // }
 
   }
 

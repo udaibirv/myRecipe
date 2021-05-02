@@ -1,5 +1,5 @@
 import React from 'react';
-import Login from './login';
+
 export default class RecipeListItem extends React.Component {
   constructor(props) {
     super(props);
@@ -31,7 +31,6 @@ export default class RecipeListItem extends React.Component {
     })
       .then(response => response.json())
       .then(data => {
-        console.log(data);
         this.setState({ favorites: data });
       })
       .catch(error => {

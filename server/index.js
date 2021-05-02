@@ -40,7 +40,6 @@ app.get('/api/recipes', (req, res) => {
 
 app.post('/api/favorites/', (req, res) => {
   const { recipeId, userId } = req.body;
-  console.log('Req Body: ', req.body);
   const params = [recipeId, userId];
   const sql = `
   insert into "favorites" ("recipeId", "userId")
@@ -48,7 +47,6 @@ app.post('/api/favorites/', (req, res) => {
     returning *
   `;
 
-  // console.log('recipeId: ', recipeId, 'userId: ', userId);
   db.query(sql, params)
     .then(result => {
       const favorite = result.rows;
@@ -76,7 +74,7 @@ app.get('/api/favorites/:userId', (req, res) => {
     .then(result => {
       const favorite = result.rows;
       res.json(favorite);
-      console.log(favorite);
+
     })
     .catch(err => {
       console.error(err);
@@ -145,15 +143,14 @@ where r."recipeId" = $1;
     });
 });
 
-app.post('/api/recipe/', (req, res) => {
-  // const userId = 1;
+app.post('/api/recipe/:userId', (req, res) => {
   const { recipeName, equipment, recipeOrigin, instructions, ingredients, imageUrl, userId } = req.body;
   const recipeSql = `
-    insert into "recipes" ("recipeName", "equipment", "recipeOrigin", "userId", "imageUrl")
+    insert into "recipes" ("recipeName", "equipment", "recipeOrigin","imageUrl", "userId")
       values ($1, $2, $3, $4, $5)
-      returning "recipeId"
+      returning "recipeId", "userId"
   `;
-  const recipeParams = [recipeName, equipment, recipeOrigin, userId, imageUrl];
+  const recipeParams = [recipeName, equipment, recipeOrigin, imageUrl, userId];
   const fullRecipe = { recipeName, equipment, recipeOrigin };
   db.query(recipeSql, recipeParams)
     .then(result => {

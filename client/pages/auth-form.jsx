@@ -46,44 +46,45 @@ export default class AuthForm extends React.Component {
 
   render() {
     const { handleChange, handleSubmit } = this;
-    const { action } = this.props;
-    const alternateActionHref = action === 'sign-up'
-      ? '#sign-in'
-      : '#sign-up';
-    const alternatActionText = action === 'sign-up'
-      ? 'Sign in instead'
-      : 'Register now';
-    const submitButtonText = action === 'sign-up'
-      ? 'Register'
-      : 'Log In';
+    // const { action } = this.props;
+    // const alternateActionHref = action === 'sign-up'
+    //   ? '#sign-in'
+    //   : '#sign-up';
+    // const alternatActionText = action === 'sign-up'
+    //   ? 'Sign in instead'
+    //   : 'Register now';
+    // const submitButtonText = action === 'sign-up'
+    //   ? 'Register'
+    //   : 'Log In';
     return (
-      <div className="container-fluid">
+      <div className="container-fluid bg-image">
         <div className="row form-row justify-content-center align-items-center">
-          <div className="col">
-            <form onSubmit={handleSubmit}>
-              <div className="mb-3">
-                <label htmlFor="username">
+          <div className="col justify-content-center align-items-center text-center ">
+            <h4 className="auth-header text-center">Create an Account to Continue!</h4>
+            <a className="text-muted auth-redirect" href={'#sign-in'}>
+              Already have an account?
+              </a>
+            <form className="auth-form"onSubmit={handleSubmit}>
+              <div className="auth-form-group">
+                <label className="auth-username"htmlFor="username">
                   Username
                 </label>
                 <input required id="username" type="text" name="username" onChange={handleChange}/>
               </div>
-              <div className="mb-3">
-                <label htmlFor="email">
+              <div className="auth-form-group">
+                <label className="auth-email"htmlFor="email">
                   Email
                 </label>
                 <input required id="email" type="text" name="email" onChange={handleChange}/>
               </div>
-              <div className="mb-3">
-                <label htmlFor="password">
+              <div className="auth-form-group">
+                <label className="auth-password"htmlFor="password">
                   Password
                 </label>
                 <input required id="password" type="password" name="password" onChange={handleChange} />
               </div>
-              <a className="text-muted" href={'#sign-in'}>
-                Already have an account?
-              </a>
-              <button type="submit" className="btn btn-primary">
-                {submitButtonText}
+              <button type="submit" className="btn auth-button ">
+                Sign Up!
               </button>
             </form>
           </div>

@@ -15,12 +15,11 @@ export default class Header extends React.Component {
   handleSignOut(event) {
     window.localStorage.removeItem('token');
     this.setState({ user: null });
-    console.log(window.localStorage);
     window.location.hash = '';
   }
 
   render() {
-    const { user, handleSignOut } = <AppContext />;
+    const { user } = <AppContext />;
     return (
   <header className="mb-5">
     <nav className="navbar navbar-dark bg-dark shadow-sm navbar-expand-lg">
