@@ -4,34 +4,39 @@ export default class RecipeListItem extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      favorites: [{
-        userId: '',
+      favorites: {
+        userId: window.localStorage.getItem('userId'),
         recipeId: ''
-      }],
+      },
       isActive: false
     };
     this.postFavorites = this.postFavorites.bind(this);
   }
 
-  postFavorites() {
-    const { userId } = this.state.favorites;
+  postFavorites(event) {
     const recipeId = this.props.recipe.recipeId;
+    const userId = this.state.favorites.userId;
+
     let body = { recipeId, userId };
+
     body = JSON.stringify(body);
 
     fetch('/api/favorites/', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
+
       },
       body: body
     })
       .then(response => response.json())
       .then(data => {
         this.setState({ favorites: data });
+      })
+      .catch(error => {
+        console.error('Error: ', error);
       });
     this.setState({ isActive: true });
-
   }
 
   render() {

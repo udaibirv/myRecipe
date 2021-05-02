@@ -1,6 +1,8 @@
 require('dotenv/config');
 const express = require('express');
 const staticMiddleware = require('./static-middleware');
+const argon2 = require('argon2');
+const jwt = require('jsonwebtoken');
 const pg = require('pg');
 const db = new pg.Pool({
   connectionString: process.env.DATABASE_URL,
@@ -37,15 +39,14 @@ app.get('/api/recipes', (req, res) => {
 });
 
 app.post('/api/favorites/', (req, res) => {
-  const userId = 1;
-  const { recipeId } = req.body;
+  const { recipeId, userId } = req.body;
+  const params = [recipeId, userId];
   const sql = `
   insert into "favorites" ("recipeId", "userId")
     values($1, $2)
     returning *
   `;
 
-  const params = [recipeId, userId];
   db.query(sql, params)
     .then(result => {
       const favorite = result.rows;
@@ -59,16 +60,21 @@ app.post('/api/favorites/', (req, res) => {
     });
 });
 
-app.get('/api/favorites/', (req, res) => {
+app.get('/api/favorites/:userId', (req, res) => {
+  const userId = req.params.userId;
+  const params = [userId];
   const favoriteSql = `
-  select distinct "favorites"."recipeId"
+  select distinct "favorites"."recipeId", "favorites"."userId"
     from "favorites"
-    join "recipes" using ("userId")
+    join "recipes" using ("recipeId")
+    where "favorites"."userId" = $1
+
   `;
-  db.query(favoriteSql)
+  db.query(favoriteSql, params)
     .then(result => {
       const favorite = result.rows;
       res.json(favorite);
+
     })
     .catch(err => {
       console.error(err);
@@ -137,15 +143,14 @@ where r."recipeId" = $1;
     });
 });
 
-app.post('/api/recipe/', (req, res) => {
-  const userId = 1;
-  const { recipeName, equipment, recipeOrigin, instructions, ingredients, imageUrl } = req.body;
+app.post('/api/recipe/:userId', (req, res) => {
+  const { recipeName, equipment, recipeOrigin, instructions, ingredients, imageUrl, userId } = req.body;
   const recipeSql = `
-    insert into "recipes" ("recipeName", "equipment", "recipeOrigin", "userId", "imageUrl")
+    insert into "recipes" ("recipeName", "equipment", "recipeOrigin","imageUrl", "userId")
       values ($1, $2, $3, $4, $5)
-      returning "recipeId"
+      returning "recipeId", "userId"
   `;
-  const recipeParams = [recipeName, equipment, recipeOrigin, userId, imageUrl];
+  const recipeParams = [recipeName, equipment, recipeOrigin, imageUrl, userId];
   const fullRecipe = { recipeName, equipment, recipeOrigin };
   db.query(recipeSql, recipeParams)
     .then(result => {
@@ -201,6 +206,82 @@ app.post('/api/recipe/', (req, res) => {
         error: 'an unexpected error occured'
       });
     });
+});
+
+app.post('/api/auth/sign-up', (req, res) => {
+  const { username, password, email } = req.body;
+  if (!username || !password || !email) {
+    res.status(400).json({
+      error: 'username, password, and email are required fields'
+    });
+  }
+  argon2
+    .hash(password)
+    .then(hashedPassword => {
+      const sql = `
+      insert into "users" ("username", "hashedPassword", "email")
+      values ($1, $2, $3)
+      returning "userId", "username", "email"
+      `;
+      const params = [username, hashedPassword, email];
+      return db.query(sql, params);
+    })
+    .then(result => {
+      const [user] = result.rows;
+      res.status(201).json(user);
+    })
+    .catch(error => {
+      console.error(error);
+      res.status(400).json({
+        error: 'an unexpected error occured'
+      });
+    });
+});
+
+app.post('/api/auth/sign-in', (req, res) => {
+  const { username, password } = req.body;
+  if (!username || !password) {
+    return res.status(400).json({
+      error: 'invalid login, please enter correct username or password'
+    });
+  }
+  const sql = `
+      select "userId", "hashedPassword"
+        from "users"
+        where "username" = $1
+
+    `;
+  const params = [username];
+  db.query(sql, params)
+    .then(result => {
+      const [user] = result.rows;
+      if (!user) {
+        return res.status(401).json({
+          error: 'invalid login'
+        });
+      }
+      const { userId, hashedPassword } = user;
+      return argon2
+        .verify(hashedPassword, password)
+        .then(isMatching => {
+          if (!isMatching) {
+            return res.status(401).json({
+              error: 'invalid login'
+            });
+          }
+
+          // console.log('Payload:', payload);
+          // console.log('token: ', token);
+          const payload = { userId, username };
+          const token = jwt.sign(payload, process.env.TOKEN_SECRET);
+          return res.json({ token, user: payload });
+        })
+        .catch(error => {
+          console.error(error);
+
+        });
+    });
+
 });
 
 app.listen(process.env.PORT, () => {

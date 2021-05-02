@@ -5,13 +5,19 @@ import parseRoute from '../lib/parse-route';
 import Header from './pages/header';
 import RecipeForm from './pages/recipeForm';
 import RecipeFavorites from './pages/recipeFavorites';
+import AppContext from './app-context';
+import AuthForm from './pages/auth-form';
+import Login from './pages/login';
 
 export default class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      route: parseRoute(window.location.hash)
+      route: parseRoute(window.location.hash),
+      user: null,
+      isAuthorizing: true
     };
+
   }
 
   componentDidMount() {
@@ -22,8 +28,16 @@ export default class App extends React.Component {
 
   renderPage() {
     const { route } = this.state;
-    if (route.path === '') {
+    if (route.path === 'list') {
       return <RecipeList />;
+    }
+
+    if (route.path === '') {
+      return <AuthForm />;
+    }
+
+    if (route.path === 'sign-in') {
+      return <Login />;
     }
 
     if (route.path === 'recipes') {
@@ -43,12 +57,19 @@ export default class App extends React.Component {
   }
 
   render() {
+
+    const { user, route } = this.state;
+    const { handleSignIn, handleSignOut } = this;
+    const contextValue = { user, route, handleSignIn, handleSignOut };
     return (
+      <AppContext.Provider value={contextValue}>
     <>
     <Header />
-      { this.renderPage() }
+    { this.renderPage()}
     </>
+    </AppContext.Provider>
     );
-
   }
 }
+
+App.contextType = AppContext;

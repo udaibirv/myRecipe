@@ -1,5 +1,4 @@
 import React from 'react';
-import RecipeList from './recipeList';
 
 export default class RecipeForm extends React.Component {
   constructor(props) {
@@ -13,7 +12,8 @@ export default class RecipeForm extends React.Component {
       }],
       equipment: '',
       instructions: [],
-      imageUrl: ''
+      imageUrl: '',
+      userId: window.localStorage.getItem('userId')
     };
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -26,11 +26,10 @@ export default class RecipeForm extends React.Component {
   handleSubmit(event) {
     event.preventDefault();
     const state = this.state;
-
-    const { recipeName, recipeOrigin, equipment, ingredients, instructions, imageUrl } = state;
-    let bodyObject = { recipeName, recipeOrigin, ingredients, equipment, instructions, imageUrl };
+    const { recipeName, recipeOrigin, equipment, ingredients, instructions, imageUrl, userId } = state;
+    let bodyObject = { recipeName, recipeOrigin, ingredients, equipment, instructions, imageUrl, userId };
     bodyObject = JSON.stringify(bodyObject);
-    fetch('/api/recipe/', {
+    fetch(`/api/recipe/${userId}`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
@@ -39,8 +38,7 @@ export default class RecipeForm extends React.Component {
     })
       .then(response => response.json())
       .then(data => {
-        console.log(data);
-        window.location.hash = '#';
+        window.location.hash = '#list';
       });
 
   }

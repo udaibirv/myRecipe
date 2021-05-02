@@ -1,9 +1,8 @@
 set client_min_messages to warning;
 CREATE TABLE "users" (
   "userId" serial NOT NULL,
-  "firstName" TEXT NOT NULL,
-  "lastName" TEXT NOT NULL,
-  "password" TEXT NOT NULL,
+  "username" TEXT NOT NULL,
+  "hashedPassword" TEXT NOT NULL,
   "email" TEXT NOT NULL,
   CONSTRAINT "users_pk" PRIMARY KEY ("userId")
 ) WITH (
@@ -15,7 +14,7 @@ CREATE TABLE "recipes" (
   "equipment" TEXT NOT NULL,
   "recipeOrigin" TEXT NOT NULL,
   "imageUrl" TEXT NOT NULL,
-  "userId" serial NOT NULL,
+  "userId" int NOT NULL,
  CONSTRAINT "recipes_pk" PRIMARY KEY ("recipeId")
 ) WITH (
  OIDS=FALSE
@@ -46,7 +45,7 @@ CREATE TABLE "recipeCategories" (
 CREATE TABLE "directions" (
   "directionId" serial NOT NULL,
   "instruction" TEXT NOT NULL,
-  "recipeId" serial NOT NULL,
+  "recipeId" int NOT NULL,
   "stepNumber" serial NOT NULL,
  primary key ("directionId")
 ) WITH (
@@ -64,4 +63,4 @@ ALTER TABLE "recipeCategories" ADD CONSTRAINT "recipeCategories_fk0" FOREIGN KEY
 ALTER TABLE "recipeCategories" ADD CONSTRAINT "recipeCategories_fk1" FOREIGN KEY ("categoryId") REFERENCES "categories"("categoryId");
 ALTER TABLE "directions" ADD CONSTRAINT "directions_fk0" FOREIGN KEY ("recipeId") REFERENCES "recipes"("recipeId");
 ALTER TABLE "ingredients" ADD CONSTRAINT "ingredients_fk0" FOREIGN KEY ("recipeId") REFERENCES "recipes"("recipeId");
-ALTER TABLE "favorites" ADD CONSTRAINT "favorites_fk0" FOREIGN KEY ("recipeId") REFERENCES "recipes" ('recipeId');
+ALTER TABLE "favorites" ADD CONSTRAINT "favorites_fk0" FOREIGN KEY ("recipeId") REFERENCES "recipes" ("recipeId");

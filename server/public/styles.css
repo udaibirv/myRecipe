@@ -12,6 +12,7 @@ li{
   cursor: pointer;
 }
 
+
 form{
   margin-left: 2rem;
 }
@@ -95,6 +96,47 @@ nav {
   font-family: 'Josefin Sans', sans-serif;
   color: #009FB7;
 }
+.auth-form{
+  margin-top: 5rem;
+  margin-right: 7rem;
+}
+.auth-username, .auth-password{
+  margin-right: .5rem;
+}
+.auth-email{
+  margin-right: 2.5rem;
+}
+.auth-header{
+  font-family: 'Josefin Sans', sans-serif;
+  color: #009FB7;
+  margin-top: 13rem;
+}
+.login-form{
+  margin-top: 4rem;
+  margin-right: 2rem;
+}
+.login-message{
+  font-family: 'Josefin Sans', sans-serif;
+  color: #009FB7;
+  margin-top: 13rem;
+}
+.login-button{
+  font-family: 'Josefin Sans', sans-serif;
+  font-size: x-large;
+
+}
+.username , .password {
+margin-right: 1rem;
+}
+.bg-image{
+  background-image: url('https://firstfinancialtest.files.wordpress.com/2018/12/cookbook.jpg');
+  height: 700px;
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  position: relative;
+}
+
 @media (max-width: 375px){
   .form-row{
     margin-bottom: 8rem;
@@ -109,6 +151,48 @@ nav {
   .recipeImage{
     margin-top: .5rem;
   }
+.bg-image{
+  background-image: url('https://firstfinancialtest.files.wordpress.com/2018/12/cookbook.jpg');
+  height: 690px;
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  position: relative;
+}
+.auth-form-group{
+  position: relative;
+  bottom: 4rem;
+  left: 2rem;
+}
+
+.auth-username, .auth-password{
+  margin-right: 6.5rem;
+}
+.auth-email{
+  margin-right: 8.5rem;
+}
+.auth-button{
+  margin-left: 4rem;
+  position: relative;
+  top: 1rem;
+}
+.auth-header{
+  position: relative;
+  top: 1rem;
+}
+.auth-password{
+  position: relative;
+  top: .5rem;
+}
+.auth-redirect{
+  position: relative;
+  top: .5rem;
+}
+.login-message{
+  position: relative;
+  top: 2rem;
+}
+
 
 
 }
@@ -123,6 +207,25 @@ nav {
   .form-row {
     margin-bottom: 24rem;
   }
+  .auth-header{
+  position: relative;
+  top: 1rem;
+}
+.auth-redirect{
+  position: relative;
+  top: .5rem;
+}
+.auth-button{
+  margin-left: 4rem;
+  position: relative;
+  top: 1rem;
+}
+.login-message{
+  position: relative;
+  top: 2rem;
+}
+
+
 
 }
 
@@ -138,4 +241,41 @@ nav {
     width: 25rem;
   }
 
+
+}
+
+@media (min-width: 568px) and (orientation: landscape){
+  .auth-form-group{
+  position: relative;
+  bottom: 2rem;
+  left: 1rem;
+}
+
+.auth-username, .auth-password{
+  margin-right: 1.5rem;
+}
+.auth-email{
+  margin-right: 3.5rem;
+}
+.auth-button{
+  margin-left: 4rem;
+  position: relative;
+  top: 1rem;
+}
+.auth-header{
+  position: relative;
+  top: 1.5rem;
+}
+.auth-redirect{
+  position: relative;
+  top: 1.5rem;
+}
+.login-message{
+  position: relative;
+  top: 2rem;
+}
+.login-form{
+  position: relative;
+  top: 1rem;
+}
 }
