@@ -279,3 +279,38 @@ margin-right: 1rem;
   top: 1rem;
 }
 }
+@media (width: 414px) {
+  .auth-form-group{
+    position: relative;
+    bottom: 2.5rem;
+    left: 2rem;
+  }
+  .auth-header{
+    position: relative;
+    top: 2rem;
+  }
+  .auth-redirect{
+  position: relative;
+  top: 1.5rem;
+}
+
+.auth-username, .auth-password{
+  position: relative;
+  right: 3rem;
+}
+.auth-email{
+  position: relative;
+  right: 3rem;
+}
+.auth-button{
+  position: relative;
+  top: 1rem;
+}
+.login-message{
+  position: relative;
+  top: 2rem;
+}
+
+
+
+}
