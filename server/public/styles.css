@@ -279,7 +279,7 @@ margin-right: 1rem;
   top: 1rem;
 }
 }
-@media (width: 414px) {
+@media (width: 414px) and (height: 896px) {
   .auth-form-group{
     position: relative;
     bottom: 2.5rem;
@@ -296,15 +296,16 @@ margin-right: 1rem;
 
 .auth-username, .auth-password{
   position: relative;
-  right: 3rem;
+  right: 5rem;
 }
 .auth-email{
   position: relative;
-  right: 3rem;
+  right: 5rem;
 }
 .auth-button{
   position: relative;
   top: 1rem;
+  right: 2rem;
 }
 .login-message{
   position: relative;
