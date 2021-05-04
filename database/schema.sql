@@ -1,3 +1,5 @@
+drop schema "public" cascade;
+create schema "public";
 set client_min_messages to warning;
 CREATE TABLE "users" (
   "userId" serial NOT NULL,
